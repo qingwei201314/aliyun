@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/category.do")
+@RequestMapping("/category")
 public class CategoryController {
 	@Resource
 	private CategoryService categoryService;
 
-	@RequestMapping(value="/test.do", method=RequestMethod.GET)
+	@RequestMapping(value="/test", method=RequestMethod.GET)
 	public String addCategory(Model model) {
 		model.addAttribute("message", "Hello World!");
 		System.out.println("kevin is good");
