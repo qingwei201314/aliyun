@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/CategoryController")
+@RequestMapping("/Category")
 public class CategoryController {
 	@Resource
 	private CategoryService categoryService;
 
-	@RequestMapping(value="/addCategory", method=RequestMethod.GET)
+	@RequestMapping(value="/addCategory.do", method=RequestMethod.GET)
 	public String addCategory(Model model) {
 		model.addAttribute("message", "Hello World!");
 		System.out.println("kevin is good");
