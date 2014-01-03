@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -87,6 +85,12 @@ public abstract class CommonDao<T> {
 	 */
 	public void delete(T entity) {
 		getSession().delete(entity);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void deleteById(String id) {
+		T t = (T) getSession().get(entityClass, id);
+		getSession().delete(t);
 	}
 
 	/**

@@ -24,7 +24,7 @@ public class Util {
 		if (document == null) {
 			SAXReader saxReader = new SAXReader();
 			String path = StringUtils.substringBefore(Util.class
-					.getResource("").getPath(), "com/kevin");
+					.getResource("").getPath(), "im/gsj");
 			document = saxReader.read(new File(path + "config.xml"));
 		}
 		path = document.selectSingleNode("//root//path").getStringValue();
