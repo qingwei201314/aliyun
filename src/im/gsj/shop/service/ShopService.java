@@ -52,27 +52,6 @@ public class ShopService {
 	}
 	
 	/**
-	 * 取出页面用到的下拉框中的值
-	 */
-	public List<Object> getCity(){
-		List<Object> itemList= new ArrayList<Object>();
-		//加上默认值
-		Object defaultItem = new Object();
-//		defaultItem.setLabel("请选择");
-//		defaultItem.setValue(-1);
-		itemList.add(defaultItem);
-		
-		List<City> cityList = cityDao.queryFirst();
-		for(City city: cityList){
-			Object item = new Object();
-//			item.setLabel(city.getName());
-//			item.setValue(city.getId());
-			itemList.add(item);
-		}
-		return itemList;
-	}
-	
-	/**
 	 * 取得指id下的子城市
 	 */
 	public List<Object> getTown(Integer parentId){

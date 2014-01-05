@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
 
 public abstract class CommonDao<T> {
 	@Resource
@@ -98,6 +101,7 @@ public abstract class CommonDao<T> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
 	public List<T> queryList(String property, Object value){
 		Criteria criteria = getCriteria();
 		criteria.add(Restrictions.eq(property, value));

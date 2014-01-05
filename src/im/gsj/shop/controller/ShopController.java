@@ -6,14 +6,24 @@ import im.gsj.entity.Shop;
 import im.gsj.shop.CityVo;
 import im.gsj.shop.service.ShopService;
 import im.gsj.util.Constant;
+import im.gsj.util.Util;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+@Controller
+@RequestMapping("/shop")
 public class ShopController {
 	@Resource
 	private ShopService shopService;
@@ -29,6 +39,21 @@ public class ShopController {
 	private List<Object> cityList; //县集合
 	private static final Integer noChoice = -1; //页面请选择项的值
 	
+	@RequestMapping(value = "upload.do", method = RequestMethod.POST)
+	public String upload(@RequestParam("file") MultipartFile file, ServletContext application) throws IOException {
+		Util util = (Util)application.getAttribute("util");
+		System.out.println("kevin");
+		System.out.println(util.getUpload());
+		
+		if (!file.isEmpty()) {
+			byte[] bytes = file.getBytes();
+			
+			// store the bytes somewhere
+			return "redirect:uploadSuccess";
+			}
+			return "redirect:uploadFailure";
+	}
+	
 	public String saveShop() throws IllegalAccessException, InvocationTargetException{
 		String result = "/admin/category/addCategory";
 		HttpSession session = null;
@@ -43,12 +68,6 @@ public class ShopController {
 		return result;
 	}
 	
-	/**
-	 * 取出页面用到的下拉框中的值
-	 */
-	public List<Object> getProvinces(){
-		return shopService.getCity();
-	}
 	
 	public List<Object> getTowns(){
 		townList = shopService.getTown(province);

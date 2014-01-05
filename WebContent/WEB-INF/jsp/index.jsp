@@ -9,7 +9,7 @@
 </head>
 <body>
 	<div class="logo_div">
-		<a href="${util.path}/user/login.jsp"><img src="${util.path}/img/logo.png" style="border:0;" /></a>
+		<a href="${util.path}/user/login.do"><img src="${util.path}/img/logo.png" style="border:0;" /></a>
 	</div>
 	<div>
 		<div class="search_div">

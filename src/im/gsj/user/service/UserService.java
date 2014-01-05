@@ -6,6 +6,7 @@ import im.gsj.entity.User;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -15,6 +16,7 @@ public class UserService {
 	/**
 	 * 检查用户是否密码正确
 	 */
+	@Transactional(readOnly=true)
 	public boolean login(User user){
 		boolean pass= false;
 		User user_db = userDao.query("phone", user.getPhone());
