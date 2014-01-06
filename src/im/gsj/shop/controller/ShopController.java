@@ -5,22 +5,21 @@ import im.gsj.dao.ShopDao;
 import im.gsj.entity.Shop;
 import im.gsj.shop.CityVo;
 import im.gsj.shop.service.ShopService;
+import im.gsj.uploadify.service.Uploadify;
 import im.gsj.util.Constant;
-import im.gsj.util.Util;
 
-import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/shop")
@@ -31,27 +30,31 @@ public class ShopController {
 	private ShopDao shopDao;
 	@Resource
 	private CityService cityService;
+	@Resource
+	private Uploadify uploadify;
+	
 	private Shop shop = new Shop();
 	private Integer province;
 	private Integer town;
 	private Integer city;
-	private List<Object> townList;//市集合
-	private List<Object> cityList; //县集合
-	private static final Integer noChoice = -1; //页面请选择项的值
-	
+	private List<Object> townList;//甯傞泦鍚�
+	private List<Object> cityList; //鍘块泦鍚�
+	private static final Integer noChoice = -1; //椤甸潰璇烽�鎷╅」鐨勫�
+
+	/**
+	 * 上传大门图片
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "upload.do", method = RequestMethod.POST)
-	public String upload(@RequestParam("file") MultipartFile file, ServletContext application) throws IOException {
-		Util util = (Util)application.getAttribute("util");
-		System.out.println("kevin");
-		System.out.println(util.getUpload());
-		
-		if (!file.isEmpty()) {
-			byte[] bytes = file.getBytes();
-			
-			// store the bytes somewhere
-			return "redirect:uploadSuccess";
-			}
-			return "redirect:uploadFailure";
+	public String upload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String widthXheight = request.getParameter("widthXheight");
+		String result = uploadify.uploadGate(request,widthXheight);
+		PrintWriter pw = response.getWriter();
+		pw.append(result);
+		return null;
 	}
 	
 	public String saveShop() throws IllegalAccessException, InvocationTargetException{
@@ -60,7 +63,7 @@ public class ShopController {
 		String phone = (String)session.getAttribute(Constant.phone);
 		if(this.city == 0){
 //			FacesContext context = FacesContext.getCurrentInstance(); 
-//			context.addMessage(null, new FacesMessage("地址不能为空!"));
+//			context.addMessage(null, new FacesMessage("鍦板潃涓嶈兘涓虹┖!"));
 			result= "/admin/shop/addShop";
 		}else{
 			shop = shopService.dealShop(shop, phone, city);
@@ -85,7 +88,7 @@ public class ShopController {
 			this.town = cityVo.getTown();
 			this.city = cityVo.getCity();
 			cityList = shopService.getTown(town);
-			//控制页面是否显示图片
+			//鎺у埗椤甸潰鏄惁鏄剧ず鍥剧墖
 			if(shop.getGate_url()==null)
 				shop.setGate_url("none");
 		}
@@ -105,7 +108,7 @@ public class ShopController {
 	}
 
 	/**
-	 * 根据省查出市
+	 * 鏍规嵁鐪佹煡鍑哄競
 	 */
 	public void setProvince(Integer province) {
 		this.province = province;

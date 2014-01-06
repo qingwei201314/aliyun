@@ -24,9 +24,10 @@ public class ShopService {
 	private ShopDao shopDao;
 	@Resource
 	private CityDao cityDao;
+
 	
 	/**
-	 * 保存对象
+	 * 淇濆瓨瀵硅薄
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
@@ -52,16 +53,16 @@ public class ShopService {
 	}
 	
 	/**
-	 * 取得指id下的子城市
+	 * 鍙栧緱鎸噄d涓嬬殑瀛愬煄甯�
 	 */
 	public List<Object> getTown(Integer parentId){
 		List<Object> itemList= new ArrayList<Object>();
 		
 		List<City> townList = cityDao.queryList("parentId", parentId);
 		if(townList != null & townList.size() > 0){
-			//加上默认值
+			//鍔犱笂榛樿鍊�
 			Object defaultItem = new Object();
-//			defaultItem.setLabel("请选择");
+//			defaultItem.setLabel("璇烽�鎷�);
 //			defaultItem.setValue(-1);
 			itemList.add(defaultItem);
 			
@@ -75,4 +76,5 @@ public class ShopService {
 
 		return itemList;
 	}
+	
 }

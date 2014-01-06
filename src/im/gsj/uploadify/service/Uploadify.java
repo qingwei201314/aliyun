@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class Uploadify {
-	public String uplodate(HttpServletRequest request, String widthXheight_s) throws Exception{
+	public String upload(HttpServletRequest request, String widthXheight_s) throws Exception{
 		List<WidthHeight> widthHeights = new ArrayList<WidthHeight>(); //用于存各存规格
 		
 		String[] widthXheightArray = widthXheight_s.split("_"); //分出几种规格
@@ -87,6 +87,60 @@ public class Uploadify {
 							resultPath += newpath + ",";
 						}
 					}
+					file.delete(); //将原始文件删除，节省磁盘空间
+				}
+			}
+		}
+		return resultPath;
+	}
+	
+	/**
+	 * 上传大门图片
+	 * @param request
+	 * @param widthXheight_s
+	 * @return
+	 * @throws Exception
+	 */
+	public String uploadGate(HttpServletRequest request, String widthHeight_s) throws Exception{
+		String[] wXh = widthHeight_s.split("x");
+		WidthHeight widthHeight = new WidthHeight(wXh[0], wXh[1]);
+		
+		String resultPath = "";
+		String path = "";
+	 	String phone = request.getParameter(Constant.phone);
+	 	int length = phone.length();
+	 	int count = length%4 > 0 ? length/4 +1 : length/4;
+	 	for(int i=0; i< count; i++)
+	 		path += "/" + phone.substring(i*4, (i*4 + 4)>length?length:i*4 + 4);
+
+	 	String upLoadPath = ((Util)request.getServletContext().getAttribute("util")).getUpload();
+	 	File filepath = new File(upLoadPath + path);
+	 	if(!filepath.exists()){
+	 		filepath.mkdirs();
+	 	}
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+		ServletContext servletContext = request.getServletContext();
+		File repository = (File) servletContext.getAttribute(upLoadPath);
+		factory.setRepository(repository);
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		List<FileItem> items = upload.parseRequest(request);
+		if(items != null && items.size() >0){
+			for(int i=0; i< items.size(); i++){
+				FileItem fileItem = items.get(i);
+				if(!fileItem.isFormField()){
+					File file = new File(upLoadPath + path+"/" + "_" + fileItem.getName());
+					fileItem.write(file);
+					Image srcImg = ImageIO.read(file); 
+					BufferedImage buffImg = null;
+					buffImg = new BufferedImage(widthHeight.getWidth(), widthHeight.getHeight(), BufferedImage.TYPE_INT_RGB);   
+					buffImg.getGraphics().drawImage(srcImg.getScaledInstance(widthHeight.getWidth(), widthHeight.getHeight(), Image.SCALE_SMOOTH), 0, 0, null);
+					String postfix = StringUtils.substringAfterLast(fileItem.getName(),".");
+					String newpath =  path + "/" + widthHeight.getWidth() + "x" + widthHeight.getHeight() + "." + postfix;
+					//如果已有大门图片，则先删除
+					File oldFile = new File(upLoadPath + newpath);
+					
+					ImageIO.write(buffImg, postfix, oldFile);
+					resultPath =newpath;
 					file.delete(); //将原始文件删除，节省磁盘空间
 				}
 			}

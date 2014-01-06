@@ -59,6 +59,7 @@
 							src="${util.path}${util.repository}${url}"
 							style="width: 580px; height: 290px; display: none;" />
 						<input type="file" name="file_upload" id="file_upload" />
+						<input type="hidden" id="gate_url" name="gate_url" />
 					</div>
 				</div>
 				<div class="actions" style="padding-left: 360px;">
@@ -92,7 +93,7 @@
 		//上传大门图片
 		$(function() {
 			  var phone = '${phone}';
-			  var jspPaht = '${util.path}/uploadify/upload.do?phone=${phone}&widthXheight=580x290';
+			  var jspPaht = '${util.path}/shop/upload.do?phone=${phone}&widthXheight=580x290';
 		      $('#file_upload').uploadify({
 		         'swf'      : '${util.path}/uploadify/uploadify.swf',
 		         'uploader' : jspPaht,
@@ -101,11 +102,10 @@
 		         'height'   :  '28px',
 		         'fileTypeExts' : '*.gif; *.jpg; *.png',
 		         'onUploadSuccess' : function(file, data, response) {
-					data = data.substring(0, data.length-1);
 		         	var path = "${util.path}${util.repository}" + data;
 		        	$("#gatePhone").show();
 		        	$("#gatePhone").attr("src", path); 
-		        	//$("#span_gate_url").children().val(data);
+		        	$("#gate_url").val(data);
 		          },
 		         'buttonClass' : 'btn info'
 		      });
