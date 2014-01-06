@@ -12,7 +12,7 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form id="myform" action="${util.path}/uploadify/upload.do" method="post" enctype="multipart/form-data">
+		<form  action="${util.path}/shop/saveShop.do" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">名称</label>
@@ -44,7 +44,7 @@
 							</c:forEach>
 						</select>
 						<select id="town" onchange="getCity(this.value, '#city')" style="width: 150px;"></select>
-						<select id="city" style="width: 150px;"></select>
+						<select id="city" name="city" style="width: 150px;" ></select>
 					</div>
 					<div class="div_margin ">
 						<input type="text" id="address" name="address" size="30"

@@ -57,13 +57,11 @@ public class ShopController {
 		return null;
 	}
 	
-	public String saveShop() throws IllegalAccessException, InvocationTargetException{
+	@RequestMapping(value = "saveShop.do", method = RequestMethod.POST)
+	public String saveShop(HttpServletRequest request) throws IllegalAccessException, InvocationTargetException {
 		String result = "/admin/category/addCategory";
-		HttpSession session = null;
-		String phone = (String)session.getAttribute(Constant.phone);
+		String phone = (String)request.getSession().getAttribute(Constant.phone);
 		if(this.city == 0){
-//			FacesContext context = FacesContext.getCurrentInstance(); 
-//			context.addMessage(null, new FacesMessage("鍦板潃涓嶈兘涓虹┖!"));
 			result= "/admin/shop/addShop";
 		}else{
 			shop = shopService.dealShop(shop, phone, city);
