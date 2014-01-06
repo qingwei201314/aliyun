@@ -15,6 +15,11 @@ public class WidthHeight {
 		this.height = height;
 	}
 	
+	public WidthHeight(String width, String height){
+		this.width = Integer.valueOf(width);
+		this.height = Integer.valueOf(height);
+	}
+	
 	public int getWidth() {
 		return width;
 	}

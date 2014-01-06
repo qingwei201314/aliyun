@@ -12,7 +12,7 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form id="myform">
+		<form id="myform" action="${util.path}/uploadify/upload.do" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">名称</label>
@@ -56,7 +56,7 @@
 					<label for="xlInput" class="label_width">大门图片</label>
 					<div class="div_margin ">
 						<img id="gatePhone"
-							src="${util.staticProject}${util.repository}${url}"
+							src="${util.path}${util.repository}${url}"
 							style="width: 580px; height: 290px; display: none;" />
 						<input type="file" name="file_upload" id="file_upload" />
 					</div>
@@ -71,10 +71,10 @@
 	<script type="text/javascript">
 		$("#shop").attr("class", "active");
 		//验证信息
-		new LiveValidation('myform:name').add(Validate.Presence);
-		new LiveValidation('myform:shortName').add(Validate.Presence);
-		new LiveValidation('myform:contact').add(Validate.Presence);
-		new LiveValidation('myform:address').add(Validate.Presence);
+		new LiveValidation('name').add(Validate.Presence);
+		new LiveValidation('shortName').add(Validate.Presence);
+		new LiveValidation('contact').add(Validate.Presence);
+		new LiveValidation('address').add(Validate.Presence);
 
 		//根据区划id查找子类，并加载到子下拉框中
 		function getCity(cityId, renderItem){
@@ -92,22 +92,20 @@
 		//上传大门图片
 		$(function() {
 			  var phone = '${phone}';
-			  var jspPaht = '${util.uploadProject}/uploadify/uploadifyGate.jsf?phone=${phone}&amp;widthXheight=580x290';
+			  var jspPaht = '${util.path}/uploadify/upload.do?phone=${phone}&widthXheight=580x290';
 		      $('#file_upload').uploadify({
-		         'swf'      : '${util.uploadProject}/uploadify/uploadify.swf',
+		         'swf'      : '${util.path}/uploadify/uploadify.swf',
 		         'uploader' : jspPaht,
 		         'buttonText' : '上传图片', 
 		         'width'    :  '90px',
 		         'height'   :  '28px',
 		         'fileTypeExts' : '*.gif; *.jpg; *.png',
 		         'onUploadSuccess' : function(file, data, response) {
-		         	var start =data.indexOf("result.");
-					var end =data.indexOf(".result");
-					data = data.substring(start+7, end-1);
-		         	var path = "${util.staticProject}${util.repository}" + data;
+					data = data.substring(0, data.length-1);
+		         	var path = "${util.path}${util.repository}" + data;
 		        	$("#gatePhone").show();
 		        	$("#gatePhone").attr("src", path); 
-		        	$("#span_gate_url").children().val(data);
+		        	//$("#span_gate_url").children().val(data);
 		          },
 		         'buttonClass' : 'btn info'
 		      });
