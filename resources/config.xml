@@ -2,7 +2,7 @@
 <root>
 	<path>http://localhost:8082/gsj</path>
 	<uploadProject>http://localhost:8079/upload</uploadProject>
-	<upload>D:\eclipse\workspace\gsj\WebContent\repository</upload>
+	<upload>E:\eclipse\workspace\gsj\WebContent\repository</upload>
 	<staticProject>http://localhost:8079</staticProject>
 	<repository>/repository</repository>
 </root>

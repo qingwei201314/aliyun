@@ -883,3 +883,18 @@ var Validate = {
     }
 
 }
+
+/**
+ * 用于补充livevalidation, add by Kevin Zhang.
+ * @param field
+ * @returns {Boolean}
+ */
+function notEnpty(field){
+	var field = "#" + field;
+	if ($(field).val() == null||$(field).val() =='') {
+		$(field).addClass("LV_invalid_field");
+		$(field).after("<span class='LV_validation_message LV_invalid'>不能为空!</span>");
+		return false;
+	}
+	return true;
+}

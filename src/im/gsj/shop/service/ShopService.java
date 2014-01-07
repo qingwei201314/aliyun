@@ -8,13 +8,14 @@ import im.gsj.entity.Shop;
 import im.gsj.entity.User;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 
 @Service
 public class ShopService {
@@ -31,50 +32,63 @@ public class ShopService {
 	 * @throws InvocationTargetException 
 	 * @throws IllegalAccessException 
 	 */
-	public Shop dealShop(Shop shop, String phone, Integer city) throws IllegalAccessException, InvocationTargetException{
+	@Transactional
+	public Shop dealShop(Shop shop, String phone) throws IllegalAccessException, InvocationTargetException{
 		User user = userDao.query("phone", phone);
 		Shop shop_db = user.getShop();
+		String id = null;
 		if(shop_db==null){
 			shop_db = shop;
 		}
 		else{
-			shop.setId(shop_db.getId());
-			BeanUtils.copyProperties(shop_db, shop);
+			id = shop_db.getId();
 		}
+		BeanUtils.copyProperties(shop, shop_db);
+		shop_db.setId(id);
 		shop_db.setUser_id(user.getId());
-		shop_db.setDistrict(city);
-		if(shop_db.getId() == null){
-			shopDao.save(shop_db);
-		}
-		else{
-			shopDao.update(shop_db);
-		}
-		return shop;
+		shopDao.saveOrUpdate(shop_db);
+		return shop_db;
 	}
 	
 	/**
-	 * 鍙栧緱鎸噄d涓嬬殑瀛愬煄甯�
+	 * 根据电话号码查出商店信息
+	 * @param phone
+	 * @return
 	 */
-	public List<Object> getTown(Integer parentId){
-		List<Object> itemList= new ArrayList<Object>();
-		
-		List<City> townList = cityDao.queryList("parentId", parentId);
-		if(townList != null & townList.size() > 0){
-			//鍔犱笂榛樿鍊�
-			Object defaultItem = new Object();
-//			defaultItem.setLabel("璇烽�鎷�);
-//			defaultItem.setValue(-1);
-			itemList.add(defaultItem);
-			
-			for(City town: townList){
-				Object item = new Object();
-//				item.setLabel(town.getName());
-//				item.setValue(town.getId());
-				itemList.add(item);
-			}
-		}
-
-		return itemList;
+	@Transactional(readOnly=true)
+	public Shop getShopByPhone(String phone){
+		User user = userDao.query("phone", phone);
+		return user.getShop();
 	}
 	
+	/**
+	 * 查出进入商店页面的参数
+	 */
+	@Transactional(readOnly=true)
+	public ModelMap toShop(String phone, ModelMap model){
+		Shop shop = getShopByPhone(phone);
+		if(shop!=null){
+			model.addAttribute("shop", shop);
+			
+			//区
+			Integer district = shop.getDistrict();
+			City districtCity = cityDao.get(district);
+			List<City> cityList = cityDao.queryList("parentId", districtCity.getParentId());
+			model.addAttribute("cities",cityList);
+			model.addAttribute("shopCity", districtCity.getId());
+			
+			//市
+			City town = districtCity.getParent();
+			List<City> townList = cityDao.queryList("parentId", town.getParentId());
+			model.addAttribute("towns",townList);
+			model.addAttribute("shopTown", town.getId());
+			
+			//查出区划信息 省
+			model.addAttribute("shopProvince", town.getParentId());
+		}
+		//不管有没商店信息，都会存省的列表
+		List<City> provinces = cityDao.getProvince();
+		model.addAttribute("provinces", provinces);
+		return model;
+	}
 }

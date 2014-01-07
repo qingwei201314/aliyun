@@ -8,30 +8,28 @@
 <script type="text/javascript" src="${util.path}/uploadify/jquery.uploadify.min.js" ></script>
 <title>用户登录</title>
 </head>
-<body>
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form  action="${util.path}/shop/saveShop.do" method="post" enctype="multipart/form-data">
+		<form  action="${util.path}/shop/saveShop.do" onsubmit="return beforeSubmit();" method="post">
 			<fieldset>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">名称</label>
 					<div class="div_margin">
-						<input type="text" id="name" name="name" size="30" maxlength="32"
-							class="xlarge" />
+						<input type="text" id="name" name="name" value="${shop.name}" size="30" maxlength="32" class="xlarge" />
 					</div>
 				</div>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">简称</label>
 					<div class="div_margin">
-						<input type="text" id="shortName" name="shortName" size="30"
+						<input type="text" id="shortName" name="shortName" size="30" value="${shop.shortName}"
 							maxlength="16" class="xlarge" />
 					</div>
 				</div>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">联系人</label>
 					<div class="div_margin ">
-						<input type="text" id="contact" name="contact" size="30"
+						<input type="text" id="contact" name="contact" size="30" value="${shop.contact}"
 							maxlength="12" class="xlarge" />
 					</div>
 				</div>
@@ -39,15 +37,26 @@
 					<label for="xlInput" class="label_width">地址</label>
 					<div class="div_margin ">
 						<select id="province" onchange="getCity(this.value, '#town')" style="width: 150px;">
+							<option value="">请选择</option>
 							<c:forEach var="province" items="${provinces}">
-								<option value="${province.id}">${province.name}</option>
+								<option value="${province.id}" <c:if test="${province.id == shopProvince}">selected="selected"</c:if>>${province.name}</option>
 							</c:forEach>
 						</select>
-						<select id="town" onchange="getCity(this.value, '#city')" style="width: 150px;"></select>
-						<select id="city" name="city" style="width: 150px;" ></select>
+						<select id="town" onchange="getCity(this.value, '#city')" style="width: 150px;">
+							<option value="">请选择</option>
+							<c:forEach var="town" items="${towns}">
+								<option value="${town.id}" <c:if test="${town.id == shopTown}">selected="selected"</c:if>>${town.name}</option>
+							</c:forEach>
+						</select>
+						<select id="city" name="district" style="width: 150px;" >
+							<option value="">请选择</option>
+							<c:forEach var="city" items="${cities}">
+								<option value="${city.id}" <c:if test="${city.id == shopCity}">selected="selected"</c:if>>${city.name}</option>
+							</c:forEach>
+						</select>
 					</div>
 					<div class="div_margin ">
-						<input type="text" id="address" name="address" size="30"
+						<input type="text" id="address" name="address" size="30" value="${shop.address}"
 							maxlength="64" class="xlarge"
 							style="width: 440px; margin-top: 5px;" />
 					</div>
@@ -56,10 +65,10 @@
 					<label for="xlInput" class="label_width">大门图片</label>
 					<div class="div_margin ">
 						<img id="gatePhone"
-							src="${util.path}${util.repository}${url}"
-							style="width: 580px; height: 290px; display: none;" />
+							src="${util.path}${util.repository}${shop.gate_url}"
+							style="width: 580px; height: 290px; display: none;<c:if test="${shop.gate_url!=null&& !''.equals(shop.gate_url)}">display:block;</c:if>" />
 						<input type="file" name="file_upload" id="file_upload" />
-						<input type="hidden" id="gate_url" name="gate_url" />
+						<input type="hidden" id="gate_url" name="gate_url" value="${shop.gate_url}" />
 					</div>
 				</div>
 				<div class="actions" style="padding-left: 360px;">
@@ -110,17 +119,12 @@
 		         'buttonClass' : 'btn info'
 		      });
 		});
-	    
+
+	    //提交前对字段进行非空验证
 		function beforeSubmit() {
-			if ($("#myform\\:city").val() == null
-					|| $("#myform\\:city").val() == -1) {
-				alert("请选择地址.");
-				return false;
-			}
-			if ($("#myform\\:gate_url").val() == 'none') {
-				alert("请上传大门图片.");
-				return false;
-			}
+			var city=  notEnpty('city');
+			var gate_url = notEnpty('gate_url');
+			return city&&gate_url;
 		}
 	</script>
 </body>

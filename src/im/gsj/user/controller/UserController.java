@@ -2,15 +2,15 @@ package im.gsj.user.controller;
 
 import im.gsj.dao.CityDao;
 import im.gsj.dao.UserDao;
-import im.gsj.entity.City;
 import im.gsj.entity.User;
 import im.gsj.shop.service.ShopService;
 import im.gsj.user.service.UserService;
 import im.gsj.util.Constant;
-import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -46,9 +46,8 @@ public class UserController {
 		if (pass) {
 			resultPath = "/admin/shop/addShop";
 			request.getSession().setAttribute(Constant.phone, user.getPhone());
-			//查出区划信息
-			List<City> provinces = cityDao.getProvince();
-			model.addAttribute("provinces", provinces);
+			//查出商店信息
+			model = shopService.toShop(user.getPhone(), model);
 		} else {
 			model.addAttribute("message", "电话或密码错误!");
 		}

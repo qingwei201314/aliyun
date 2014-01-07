@@ -55,6 +55,7 @@ public abstract class CommonDao<T> {
 	 * 
 	 * @param entity
 	 */
+	@Transactional
 	public void save(T entity) {
 		getSession().save(entity);
 	}
@@ -64,18 +65,28 @@ public abstract class CommonDao<T> {
 	 * 
 	 * @param entity
 	 */
+	@Transactional
 	public void update(T entity) {
 		getSession().update(entity);
 	}
-
+	
+	/**
+	 * 保存或更新记录
+	 * @param entity
+	 */
+	@Transactional
+	public void saveOrUpdate(T entity) {
+		getSession().saveOrUpdate(entity);
+	}
+	
 	/**
 	 * 取出指定ID的对象.
-	 * 
 	 * @param entityClass
 	 * @param id
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
 	public T get(Serializable id) {
 		T t = (T) getSession().get(entityClass, id);
 		return t;
@@ -86,11 +97,13 @@ public abstract class CommonDao<T> {
 	 * 
 	 * @param entity
 	 */
+	@Transactional
 	public void delete(T entity) {
 		getSession().delete(entity);
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Transactional
 	public void deleteById(String id) {
 		T t = (T) getSession().get(entityClass, id);
 		getSession().delete(t);
@@ -116,6 +129,7 @@ public abstract class CommonDao<T> {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
 	public T query(String property, Object value){
 		Criteria criteria = getCriteria();
 		criteria.add(Restrictions.eq(property, value));
@@ -131,6 +145,7 @@ public abstract class CommonDao<T> {
 	 * 
 	 * @return
 	 */
+	@Transactional(readOnly=true)
 	public Long getCount(Criteria criteria) {
 		criteria.setProjection(Projections.rowCount());
 		Long totalCount = (Long) criteria.uniqueResult();
@@ -141,6 +156,7 @@ public abstract class CommonDao<T> {
 	 * 取得指定页的记录
 	 */
 	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
 	public List<T> listByPage(Criteria criteria, int pageNo, int pageSize) {
 		int firstResult = (pageNo - 1) * pageSize;
 		criteria.setFirstResult(firstResult);
