@@ -6,7 +6,7 @@
 <%@ include file="/commonjsp/head.jsp"%>
 <link href="${util.path}/css/shop/shop.css" rel="stylesheet" />
 <link href="${util.path}/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="${util.path}/uploadify/jquery.uploadify.min.js" />
+<script type="text/javascript" src="${util.path}/uploadify/jquery.uploadify.min.js"></script>
 <script type="text/javascript" src="${util.path}/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" src="${util.path}/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript" charset="utf-8" src="${util.path}/ueditor/lang/zh-cn/zh-cn.js"></script>
@@ -15,12 +15,12 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form action="">
+		<form action="${util.path}/product/saveProduct.do" method="post">
 			<fieldset>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">类别</label>
 					<div class="div_margin">
-						<select name="" class="xlarge">
+						<select name="category_id" class="xlarge">
 							<c:forEach var="category" items="${categoryList}">
 								<option value="${category.id}" <c:if test="${category.id.equals(categoryId)}">selected="selected"</c:if>>${category.name}</option>
 							</c:forEach>
@@ -51,7 +51,7 @@
 	</div>	
 	<script type="text/javascript">
 		$("#product").attr("class","active");
-		UE.getEditor('myEditor')
+		UE.getEditor('myEditor');
 	</script>
 </body>
 </html>

@@ -13,13 +13,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/product")
@@ -30,9 +29,6 @@ public class ProductController {
 	private ProductDao productDao;
 	@Resource
 	private CategoryService categoryService;
-	
-	private ProductVo productVo;
-	private Product product;
 
 	/**
 	 * 跳转到增加产品页面
@@ -40,32 +36,34 @@ public class ProductController {
 	@RequestMapping(value="toProduct.do", method=RequestMethod.GET)
 	public String toProduct(HttpServletRequest request, ModelMap model) {
 		String phone = (String)request.getSession().getAttribute(Constant.phone);
+		String categoryId = request.getParameter("categoryId");
 		//查出当前商店的分类
-//		List<Category> categoryList = categoryService.list(phone);
-//		model.addAttribute("categoryList", categoryList);
-//		model.addAttribute("categoryId", categoryId);
+		List<Category> categoryList = categoryService.list(phone);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryId", categoryId);
 		return "/admin/product/addProduct";
 	}
 	
-
-	public String saveProduct() throws IllegalAccessException,
-			InvocationTargetException {
-		HttpServletRequest request = null;
-		String description = request.getParameter("description");
-		HttpSession session = request.getSession();
-		String phone = (String) session.getAttribute(Constant.phone);
-		productService.save(product, phone, description);
-		productVo = productService.get(product.getId());
+	/**
+	 * 保存产品信息
+	 */
+	@RequestMapping(value="saveProduct.do", method=RequestMethod.POST)
+	public String saveProduct(@ModelAttribute("product") Product product, HttpServletRequest request, ModelMap model) throws IllegalAccessException, InvocationTargetException  {
+		String phone = (String)request.getSession().getAttribute(Constant.phone);
+		productService.save(product, phone);
+		ProductVo productVo = productService.get(product.getId());
+		model.addAttribute("productVo", productVo);
+		
 		return "/admin/product/addProductImage";
 	}
 
 	public String editProduct() {
-		product = productDao.get(productVo.getId());
+//		Product product = productDao.get(productVo.getId());
 		return "/admin/product/addProduct";
 	}
 
 	public String editProductById(String productId) {
-		product = productDao.get(productId);
+		Product product = productDao.get(productId);
 		return "/admin/product/addProduct";
 	}
 
@@ -77,16 +75,6 @@ public class ProductController {
 //		productList = productService.getFirstCategoryProduct(phone);
 //		return "/admin/image/addImage";
 //	}
-
-
-
-	public List<Object> getCategoryList() {
-		HttpSession session = null;
-		String phone = (String) session.getAttribute(Constant.phone);
-		List<Object> categoryList = productService.getCategoryList(phone);
-		
-		return categoryList;
-	}
 
 //	public ProductVo getProductVo() throws IllegalAccessException, InvocationTargetException {
 //		HttpServletRequest request =null;

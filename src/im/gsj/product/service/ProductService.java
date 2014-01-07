@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductService {
@@ -48,23 +49,20 @@ public class ProductService {
 		return selectItemList;
 	}
 	
-	public void save(Product product, String phone, String description){
+	public void save(Product product, String phone){
 		Shop shop =shopDao.getByPhone(phone);
 		product.setShop_id(shop.getId());
-		product.setDescription(description);
-		if(StringUtils.isBlank(product.getId())){
-			product.setId(null);
-			productDao.save(product);
-		}
-		else{
-			productDao.update(product);
-		}
+		productDao.save(product);
 	}
 	
+	/**
+	 * 取得产品基本信息
+	 */
+	@Transactional(readOnly=true)
 	public ProductVo get(String productId) throws IllegalAccessException, InvocationTargetException{
 		Product product = productDao.get(productId);
 		ProductVo productVo = new ProductVo();
-		BeanUtils.copyProperties(productVo, product);
+		BeanUtils.copyProperties(product,productVo);
 		productVo.setCategory_id(product.getCategory().getId());
 		productVo.setCategoryName(product.getCategory().getName());
 		List<Image> imageList= imageDao.getImageListByProductId(product.getId());
