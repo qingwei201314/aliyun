@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -48,8 +49,8 @@ public class ShopController {
 	}
 	
 	@RequestMapping(value = "saveShop.do", method = RequestMethod.POST)
-	public String saveShop(@ModelAttribute("shop") Shop shop, HttpServletRequest request, ModelMap model) throws IllegalAccessException, InvocationTargetException {
-		String phone = (String)request.getSession().getAttribute(Constant.phone);
+	public String saveShop(@ModelAttribute("shop") Shop shop, HttpSession session, ModelMap model) throws IllegalAccessException, InvocationTargetException {
+		String phone = (String)session.getAttribute(Constant.phone);
 		shop = shopService.dealShop(shop, phone);
 		
 		//查出当前商店的分类
@@ -66,9 +67,9 @@ public class ShopController {
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 */
-	@RequestMapping(value = "toShop.do", method = RequestMethod.GET)
-	public String toShop(HttpServletRequest request, ModelMap model) throws IllegalAccessException, InvocationTargetException {
-		String phone = (String)request.getSession().getAttribute(Constant.phone);
+	@RequestMapping(value = "addShop.do", method = RequestMethod.GET)
+	public String addShop(HttpSession session, ModelMap model) throws IllegalAccessException, InvocationTargetException {
+		String phone = (String)session.getAttribute(Constant.phone);
 		model = shopService.toShop(phone, model);
 		return "/admin/shop/addShop";
 	}

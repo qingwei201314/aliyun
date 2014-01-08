@@ -40,12 +40,12 @@ public class UserController {
 	 * 用户登录
 	 */
 	@RequestMapping(value = "loginValidate.do", method = RequestMethod.POST)
-	public String loginValidate(@ModelAttribute("user") User user, HttpServletRequest request, ModelMap model) {
+	public String loginValidate(@ModelAttribute("user") User user, HttpSession session, ModelMap model) {
 		String resultPath = "/user/login";
 		boolean pass = userService.login(user);
 		if (pass) {
 			resultPath = "/admin/shop/addShop";
-			request.getSession().setAttribute(Constant.phone, user.getPhone());
+			session.setAttribute(Constant.phone, user.getPhone());
 			//查出商店信息
 			model = shopService.toShop(user.getPhone(), model);
 		} else {

@@ -1,5 +1,6 @@
 package im.gsj.product.service;
 
+import im.gsj.category.service.CategoryService;
 import im.gsj.dao.CategoryDao;
 import im.gsj.dao.ImageDao;
 import im.gsj.dao.ProductDao;
@@ -8,18 +9,20 @@ import im.gsj.entity.Category;
 import im.gsj.entity.Image;
 import im.gsj.entity.Product;
 import im.gsj.entity.Shop;
+import im.gsj.image.service.ImageService;
 import im.gsj.product.vo.ProductVo;
+import im.gsj.uploadify.service.Uploadify;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
 
 @Service
 public class ProductService {
@@ -31,23 +34,12 @@ public class ProductService {
 	private ProductDao productDao;
 	@Resource
 	private ImageDao imageDao;
-	
-	/**
-	 * 增加产品页面的类别下拉列表
-	 */
-	public List<Object> getCategoryList(String phone){
-		Shop shop =shopDao.getByPhone(phone);
-		List<Object> selectItemList = new ArrayList<Object>();
-		List<Category> categoryList = categoryDao.getByShop(shop.getId());
-		if(categoryList!=null && categoryList.size() >0){
-			for(Category category:categoryList){
-//				Object item =new SelectItem(category.getId(),category.getName());
-				Object item =null;
-				selectItemList.add(item);
-			}
-		}
-		return selectItemList;
-	}
+	@Resource
+	private CategoryService categoryService;
+	@Resource
+	private Uploadify uploadify;
+	@Resource
+	private ImageService imageService;
 	
 	public void save(Product product, String phone){
 		Shop shop =shopDao.getByPhone(phone);
@@ -70,15 +62,29 @@ public class ProductService {
 		return productVo;
 	}
 	
-	public List<Product> getFirstCategoryProduct(String phone){
-		List<Product> productList = new ArrayList<Product>();
-		List<Object> categoryList  = getCategoryList(phone);
-		if(categoryList!=null && categoryList.size() >0){
-			Object fist = categoryList.get(0);
-//			productList = productDao.queryList("category_id", fist.getValue());
-			productList = productDao.queryList("category_id", null);
-		}
-		return productList;
+	
+	public ModelMap toEditProduct(String phone, String productId, ModelMap model){
+		Product product = productDao.get(productId);
+		//查出当前商店的分类
+		List<Category> categoryList = categoryService.list(phone);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryId", product.getCategory_id());
+		model.addAttribute("product", product);
+		return model;
 	}
 	
+	/**
+	 * 将图片写到磁盘，并保存数据库记录
+	 * @param request
+	 * @param widthXheight
+	 * @return
+	 * @throws Exception 
+	 */
+	@Transactional
+	public String upload(HttpServletRequest request, String widthXheight) throws Exception{
+		String productId = request.getParameter("productId");
+		String result = uploadify.upload(request,widthXheight);
+//		result = imageService.saveImage(productId, result);
+		return result;
+	}
 }

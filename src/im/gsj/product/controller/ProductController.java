@@ -6,19 +6,24 @@ import im.gsj.entity.Category;
 import im.gsj.entity.Product;
 import im.gsj.product.service.ProductService;
 import im.gsj.product.vo.ProductVo;
+import im.gsj.uploadify.service.Uploadify;
 import im.gsj.util.Constant;
 
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/product")
@@ -33,10 +38,9 @@ public class ProductController {
 	/**
 	 * 跳转到增加产品页面
 	 */
-	@RequestMapping(value="toProduct.do", method=RequestMethod.GET)
-	public String toProduct(HttpServletRequest request, ModelMap model) {
-		String phone = (String)request.getSession().getAttribute(Constant.phone);
-		String categoryId = request.getParameter("categoryId");
+	@RequestMapping(value="addProduct.do", method=RequestMethod.GET)
+	public String addProduct(@RequestParam("categoryId") String categoryId, HttpSession session, ModelMap model) {
+		String phone = (String)session.getAttribute(Constant.phone);
 		//查出当前商店的分类
 		List<Category> categoryList = categoryService.list(phone);
 		model.addAttribute("categoryList", categoryList);
@@ -48,8 +52,8 @@ public class ProductController {
 	 * 保存产品信息
 	 */
 	@RequestMapping(value="saveProduct.do", method=RequestMethod.POST)
-	public String saveProduct(@ModelAttribute("product") Product product, HttpServletRequest request, ModelMap model) throws IllegalAccessException, InvocationTargetException  {
-		String phone = (String)request.getSession().getAttribute(Constant.phone);
+	public String saveProduct(@ModelAttribute("product") Product product, HttpSession session, ModelMap model) throws IllegalAccessException, InvocationTargetException  {
+		String phone = (String)session.getAttribute(Constant.phone);
 		productService.save(product, phone);
 		ProductVo productVo = productService.get(product.getId());
 		model.addAttribute("productVo", productVo);
@@ -57,14 +61,25 @@ public class ProductController {
 		return "/admin/product/addProductImage";
 	}
 
-	public String editProduct() {
-//		Product product = productDao.get(productVo.getId());
+	@RequestMapping(value="editProduct.do", method=RequestMethod.GET)
+	public String editProduct(@RequestParam("productId") String productId, HttpSession session, ModelMap model) {
+		String phone = (String)session.getAttribute(Constant.phone);
+		model =productService.toEditProduct(phone, productId, model);
 		return "/admin/product/addProduct";
 	}
-
-	public String editProductById(String productId) {
-		Product product = productDao.get(productId);
-		return "/admin/product/addProduct";
+	
+	/**
+	 * 上传产品图片
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "upload.do", method = RequestMethod.POST)
+	public String upload(HttpServletRequest request, HttpServletResponse response) throws Exception{
+			String widthXheight = request.getParameter("widthXheight");
+			String result = productService.upload(request, widthXheight);
+			PrintWriter pw = response.getWriter();
+			pw.append(result);
+			return null;
 	}
 
 //	public String deleteProduct(String productId, String curCategory) {

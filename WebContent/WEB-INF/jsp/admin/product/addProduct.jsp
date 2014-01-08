@@ -30,7 +30,7 @@
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">名称</label>
 					<div class="div_margin">
-						<input type="text" name="name" size="30" class="xlarge" />
+						<input type="text" name="name" value="${product.name}" size="30" class="xlarge" />
 					</div>
 				</div>
 				<div class="clearfix">
@@ -40,7 +40,7 @@
 				</div>
 				<div class="clearfix">
 					<div style="margin: auto;width: 800px;">
-						<script id="myEditor" name="description"  type="text/plain" style="width:800px;height:240px;"></script>
+						<script id="myEditor" name="description"  type="text/plain" style="width:800px;height:240px;">${product.description}</script>
 					</div>
 				</div>
 			</fieldset>

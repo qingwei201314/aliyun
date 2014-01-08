@@ -12,7 +12,8 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form action="">
+		<form action="${util.path}/product/editProduct.do" method="get">
+			<input type="hidden" name="productId" value="${productVo.id}" />
 			<fieldset>
 			<div style="width: 500px;margin:0 auto;">
 				<table class="bordered-table zebra-striped table_width_93">
@@ -53,9 +54,8 @@
 				</div>
 			</div>
 			<div class="actions" style="padding-left: 360px;height:31px;">
-				<h:inputHidden value="${productVo.id}" />
 				<div style="float: left;">
-					<input type="button"  class="btn primary" value="编辑以上信息"/>
+					<input type="submit"  class="btn primary" value="编辑以上信息"/>
 				</div>
 				<div style="float: left;margin-left: 10px;"><input type="file" name="file_upload" id="file_upload" /></div>
 				<div style="float: right;z-index: 10">
@@ -85,34 +85,19 @@
 		
 			$(function() {
 			  var phone = '${phone}';
-			  var jspPath = '${util.path}/uploadify/uploadifyGate.jsf?phone=${phone}&amp;widthXheight=800x600_220x165';
+			  var jspPath = '${util.path}/product/upload.do?phone=${phone}&productId=${productVo.id}&widthXheight=800x600_220x165';
 		      $('#file_upload').uploadify({
-		         'swf'      : '${util.uploadProject}/uploadify/uploadify.swf',
+		         'swf'      : '${util.path}/uploadify/uploadify.swf',
 		         'uploader' : jspPath,
 		         'buttonText' : '上传图片', 
 		         'width'    :  '90px',
 		         'height'   :  '28px',
 		         'fileTypeExts' : '*.gif; *.jpg; *.png',
 		         'onUploadSuccess' : function(file, data, response) {
-		         	var start =data.indexOf("result.");
-					var end =data.indexOf(".result");
-					data = data.substring(start+7, end);
-		         	$.ajax({
-						url: "${util.path}/admin/product/saveProductImage.jsf",
-						data: {
-							product_id: "${productController.productVo.id}",
-							url:        data
-						},
-						success: function( data ) {
-							var start =data.indexOf("result.");
-							var end =data.indexOf(".result");
-							var result = data.substring(start+7, end);
-							var content = $("#template").html();
-							var photosrc = "${util.path}${util.repository}" + result;
-							content = content.replace("photosrc", photosrc);
-							$("#displayContent").append(content);
-						}
-					});
+		        	 	var content = $("#template").html();
+						var photosrc = "${util.path}${util.repository}" + data;
+						content = content.replace("photosrc", photosrc);
+						$("#displayContent").append(content);
 		          },
 		         'buttonClass' : 'btn info'
 		      });

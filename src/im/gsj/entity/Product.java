@@ -12,7 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Product {
 	@Id
 	@GenericGenerator(name = "generator", strategy = "uuid.hex")
-	@GeneratedValue(generator = "generator")	
+	@GeneratedValue(generator = "generator")
 	private String id;
 	private String name;
 	private String description;

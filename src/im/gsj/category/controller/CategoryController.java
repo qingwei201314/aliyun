@@ -53,8 +53,8 @@ public class CategoryController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value="toCategory.do", method=RequestMethod.GET)
-	public String toCategory(HttpServletRequest request, ModelMap model) {
+	@RequestMapping(value="addCategory.do", method=RequestMethod.GET)
+	public String addCategory(HttpServletRequest request, ModelMap model) {
 		String phone = (String)request.getSession().getAttribute(Constant.phone);
 		//查出当前商店的分类
 		List<Category> categoryList = categoryService.list(phone);
