@@ -19,6 +19,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +45,12 @@ public class ProductService {
 	public void save(Product product, String phone){
 		Shop shop =shopDao.getByPhone(phone);
 		product.setShop_id(shop.getId());
-		productDao.save(product);
+		if(StringUtils.isEmpty(product.getId())){
+			productDao.save(product);
+		}
+		else{
+			productDao.update(product);
+		}
 	}
 	
 	/**
@@ -83,8 +89,9 @@ public class ProductService {
 	@Transactional
 	public String upload(HttpServletRequest request, String widthXheight) throws Exception{
 		String productId = request.getParameter("productId");
-		String result = uploadify.upload(request,widthXheight);
-//		result = imageService.saveImage(productId, result);
+		String phone = (String)request.getSession().getAttribute("phone");
+		String result = uploadify.upload(phone, request,widthXheight);
+		result = imageService.saveImage(productId, result);
 		return result;
 	}
 }

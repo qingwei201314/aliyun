@@ -6,7 +6,6 @@ import im.gsj.entity.Category;
 import im.gsj.entity.Product;
 import im.gsj.product.service.ProductService;
 import im.gsj.product.vo.ProductVo;
-import im.gsj.uploadify.service.Uploadify;
 import im.gsj.util.Constant;
 
 import java.io.PrintWriter;
@@ -58,6 +57,13 @@ public class ProductController {
 		ProductVo productVo = productService.get(product.getId());
 		model.addAttribute("productVo", productVo);
 		
+		return "/admin/product/addProductImage";
+	}
+	
+	@RequestMapping(value="addProductImage.do", method=RequestMethod.GET)
+	public String addProductImage(@RequestParam("productId") String productId, ModelMap model) throws IllegalAccessException, InvocationTargetException{
+		ProductVo productVo = productService.get(productId);
+		model.addAttribute("productVo", productVo);
 		return "/admin/product/addProductImage";
 	}
 

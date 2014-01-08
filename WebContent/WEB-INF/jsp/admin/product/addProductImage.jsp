@@ -12,8 +12,9 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form action="${util.path}/product/editProduct.do" method="get">
+		<form id="productForm" action="${util.path}/product/editProduct.do" method="get">
 			<input type="hidden" name="productId" value="${productVo.id}" />
+			<input type="hidden" name="categoryId" value="${productVo.category_id}" />
 			<fieldset>
 			<div style="width: 500px;margin:0 auto;">
 				<table class="bordered-table zebra-striped table_width_93">
@@ -59,7 +60,7 @@
 				</div>
 				<div style="float: left;margin-left: 10px;"><input type="file" name="file_upload" id="file_upload" /></div>
 				<div style="float: right;z-index: 10">
-					<input type="button"  class="btn primary" value="添加新产品"/>
+					<input type="button" onclick="jumpTo();" class="btn primary" value="添加新产品"/>
 				</div>
 			</div>
 		</form>
@@ -85,7 +86,7 @@
 		
 			$(function() {
 			  var phone = '${phone}';
-			  var jspPath = '${util.path}/product/upload.do?phone=${phone}&productId=${productVo.id}&widthXheight=800x600_220x165';
+			  var jspPath = '${util.path}/product/upload.do?productId=${productVo.id}&widthXheight=800x600_220x165';
 		      $('#file_upload').uploadify({
 		         'swf'      : '${util.path}/uploadify/uploadify.swf',
 		         'uploader' : jspPath,
@@ -102,6 +103,12 @@
 		         'buttonClass' : 'btn info'
 		      });
 		    });
+
+		    //添加新产品跳转
+		    function jumpTo(){
+		    	$("#productForm").attr("action", "${util.path}/product/addProduct.do");
+		    	$("#productForm").submit();
+			}
 </script>
 </body>
 </html>

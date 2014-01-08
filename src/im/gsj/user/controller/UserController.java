@@ -32,7 +32,7 @@ public class UserController {
 	private User user = new User();
 
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
-	public String login(Model model) {
+	public String login() {
 		return "/user/login";
 	}
 

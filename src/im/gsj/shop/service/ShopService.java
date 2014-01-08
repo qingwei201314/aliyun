@@ -25,7 +25,6 @@ public class ShopService {
 	private ShopDao shopDao;
 	@Resource
 	private CityDao cityDao;
-
 	
 	/**
 	 * 淇濆瓨瀵硅薄

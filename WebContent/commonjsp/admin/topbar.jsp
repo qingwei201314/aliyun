@@ -10,7 +10,7 @@
 				<li class="arrow_img"></li>
 				<li id="product"><a href="${util.path}/product/addProduct.do?categoryId=">添加产品</a></li>
 				<li class="arrow_img"></li>
-				<li id="image"><a href="${util.path}/admin/image/addImage.jsp">添加图片</a></li>
+				<li id="image"><a href="${util.path}/image/addImage.do">添加图片</a></li>
 			</ul>
 		</div>
 	</div>

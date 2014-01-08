@@ -34,6 +34,7 @@ public class CategoryController {
 		//查出当前商店的分类
 		List<Category> categoryList = categoryService.list(phone);
 		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryId", category.getId());
 		return "/admin/product/addProduct";
 	}
 	

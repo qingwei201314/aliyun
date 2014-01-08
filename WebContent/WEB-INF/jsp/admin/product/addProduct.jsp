@@ -16,6 +16,7 @@
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
 		<form action="${util.path}/product/saveProduct.do" method="post">
+			<input type="hidden" name="id" value="${product.id}" />
 			<fieldset>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">类别</label>

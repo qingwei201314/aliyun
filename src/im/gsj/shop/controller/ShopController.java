@@ -28,10 +28,10 @@ public class ShopController {
 	@Resource
 	private ShopService shopService;
 	@Resource
-	private Uploadify uploadify;
-	@Resource
 	private CategoryService categoryService;
-
+	@Resource
+	private Uploadify uploadify;
+	
 	/**
 	 * 上传大门图片
 	 * @param request
@@ -41,8 +41,9 @@ public class ShopController {
 	 */
 	@RequestMapping(value = "upload.do", method = RequestMethod.POST)
 	public String upload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String phone = (String)request.getSession().getAttribute(Constant.phone);
 		String widthXheight = request.getParameter("widthXheight");
-		String result = uploadify.uploadGate(request,widthXheight);
+		String result = uploadify.uploadGate(phone,request,widthXheight);
 		PrintWriter pw = response.getWriter();
 		pw.append(result);
 		return null;

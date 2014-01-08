@@ -24,9 +24,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class Uploadify {
-	public String upload(HttpServletRequest request, String widthXheight_s) throws Exception{
+	public String upload(String phone, HttpServletRequest request, String widthXheight_s) throws Exception{
 		List<WidthHeight> widthHeights = new ArrayList<WidthHeight>(); //用于存各存规格
-		
 		String[] widthXheightArray = widthXheight_s.split("_"); //分出几种规格
 		for(int i=0; i < widthXheightArray.length; i++){
 			String widthXheight = widthXheightArray[i];
@@ -34,10 +33,8 @@ public class Uploadify {
 			WidthHeight widthHeight = new WidthHeight(wXh[0], wXh[1]);
 			widthHeights.add(widthHeight);
 		}
-		
 		String resultPath = "";
 		String path = "";
-	 	String phone = request.getParameter(Constant.phone);
 	 	int length = phone.length();
 	 	int count = length%4 > 0 ? length/4 +1 : length/4;
 	 	for(int i=0; i< count; i++)
@@ -45,18 +42,7 @@ public class Uploadify {
 	 	//增加年份
 	 	int year = Calendar.getInstance().get(Calendar.YEAR);
 	 	path += "/" + year;
-	 	String ymdhms = new StringBuffer().append(Calendar.getInstance().get(Calendar.YEAR))
-	 										.append("-")
-	 										.append(Calendar.getInstance().get(Calendar.MONTH) + 1)
-	 										.append("-")
-	 										.append(Calendar.getInstance().get(Calendar.DATE))
-	 										.append("-")
-	 										.append(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))
-	 										.append("-")
-	 										.append(Calendar.getInstance().get(Calendar.MINUTE))
-	 										.append("-")
-	 										.append(Calendar.getInstance().get(Calendar.SECOND))
-	 										.toString();
+	 	String ymdhms = getDateFormat();
 	 	String upLoadPath = ((Util)request.getServletContext().getAttribute("util")).getUpload();
 	 	File filepath = new File(upLoadPath + path);
 	 	if(!filepath.exists()){
@@ -101,26 +87,36 @@ public class Uploadify {
 	 * @return
 	 * @throws Exception
 	 */
-	public String uploadGate(HttpServletRequest request, String widthHeight_s) throws Exception{
+	public String uploadGate(String phone, HttpServletRequest request, String widthHeight_s) throws Exception{
 		String[] wXh = widthHeight_s.split("x");
 		WidthHeight widthHeight = new WidthHeight(wXh[0], wXh[1]);
 		
 		String resultPath = "";
 		String path = "";
-	 	String phone = request.getParameter(Constant.phone);
 	 	int length = phone.length();
 	 	int count = length%4 > 0 ? length/4 +1 : length/4;
 	 	for(int i=0; i< count; i++)
 	 		path += "/" + phone.substring(i*4, (i*4 + 4)>length?length:i*4 + 4);
+	 	
+	 	path += "/gate";
 
 	 	String upLoadPath = ((Util)request.getServletContext().getAttribute("util")).getUpload();
+	 	String ymdhms = getDateFormat();
+	 	//大门图片的存放路径
 	 	File filepath = new File(upLoadPath + path);
+	 	//如果不存在，则创建，存在则删除其子目录。大门图片只有一张
 	 	if(!filepath.exists()){
 	 		filepath.mkdirs();
 	 	}
+	 	else{
+	 		File[] files = filepath.listFiles();
+	 		if(files !=null && files.length >0)
+	 			for(File file: files)
+	 				file.delete();
+	 	}
 		DiskFileItemFactory factory = new DiskFileItemFactory();
 		ServletContext servletContext = request.getServletContext();
-		File repository = (File) servletContext.getAttribute(upLoadPath);
+		File repository = (File) servletContext.getAttribute(upLoadPath + path);
 		factory.setRepository(repository);
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		List<FileItem> items = upload.parseRequest(request);
@@ -135,9 +131,9 @@ public class Uploadify {
 					buffImg = new BufferedImage(widthHeight.getWidth(), widthHeight.getHeight(), BufferedImage.TYPE_INT_RGB);   
 					buffImg.getGraphics().drawImage(srcImg.getScaledInstance(widthHeight.getWidth(), widthHeight.getHeight(), Image.SCALE_SMOOTH), 0, 0, null);
 					String postfix = StringUtils.substringAfterLast(fileItem.getName(),".");
-					String newpath =  path + "/" + widthHeight.getWidth() + "x" + widthHeight.getHeight() + "." + postfix;
+					String newpath =  path  + "/" + ymdhms+ "_" + widthHeight.getWidth() + "x" + widthHeight.getHeight() + "." + postfix;
 					//如果已有大门图片，则先删除
-					File oldFile = new File(upLoadPath + newpath);
+					File oldFile = new File(upLoadPath +  newpath);
 					
 					ImageIO.write(buffImg, postfix, oldFile);
 					resultPath =newpath;
@@ -146,5 +142,25 @@ public class Uploadify {
 			}
 		}
 		return resultPath;
+	}
+	
+	/**
+	 * 取得当前时间的格式
+	 * @return
+	 */
+	private String getDateFormat(){
+		String ymdhms = new StringBuffer().append(Calendar.getInstance().get(Calendar.YEAR))
+			.append("-")
+			.append(Calendar.getInstance().get(Calendar.MONTH) + 1)
+			.append("-")
+			.append(Calendar.getInstance().get(Calendar.DATE))
+			.append("-")
+			.append(Calendar.getInstance().get(Calendar.HOUR_OF_DAY))
+			.append("-")
+			.append(Calendar.getInstance().get(Calendar.MINUTE))
+			.append("-")
+			.append(Calendar.getInstance().get(Calendar.SECOND))
+			.toString();
+		return ymdhms;
 	}
 }
