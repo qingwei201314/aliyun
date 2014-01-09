@@ -4,12 +4,10 @@
 <c:forEach var="product" items="${productList}">
 	<tr>
 		<td>${product.name}</td>
-		<td><a
-			href="${util.path}/product/editProduct.do?productId=${product.id}">编辑</a>
-			<a
-			href="${util.path}/product/deleteProduct.do?productId=${product.id}">删除</a>
-			<a
-			href="${util.path}/product/addProductImage.do?productId=${product.id}">查看</a>
+		<td>
+			<a href="${util.path}/product/editProduct.do?productId=${product.id}">编辑</a>
+			<a href="javascript:void(0)" onclick="deleteProduct('${product.id}')">删除</a>
+			<a href="${util.path}/product/addProductImage.do?productId=${product.id}">查看</a>
 		</td>
 	</tr>
 </c:forEach>

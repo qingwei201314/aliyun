@@ -36,7 +36,7 @@
 								<td>${product.name}</td>
 								<td>
 									<a href="${util.path}/product/editProduct.do?productId=${product.id}">编辑</a>
-									<a href="${util.path}/product/deleteProduct.do?productId=${product.id}">删除</a>
+									<a href="javascript:void(0)" onclick="deleteProduct('${product.id}')">删除</a>
 									<a href="${util.path}/product/addProductImage.do?productId=${product.id}">查看</a>
 								</td>
 							</tr>
@@ -63,6 +63,13 @@
 					$("#productListDetail").html(data);
 				}
 			});
+		}
+
+		//删除产品
+		function deleteProduct(productId){
+			if(confirm("确定要删除吗？")){
+				window.location.href="${util.path}/product/deleteProduct.do?productId=" + productId;
+			}
 		}
 	</script>
 </body>
