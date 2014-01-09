@@ -15,9 +15,9 @@
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">类别</label>
 					<div class="div_margin">
-						<select id="category" class="xlarge">
+						<select id="category" onchange="getProductList(this.value);" class="xlarge">
 							<c:forEach var="category" items="${categoryList}">
-								<option value="${category.id}">${category.name}</option>
+								<option value="${category.id}" <c:if test="${category.id.equals(categoryId)}">selected="selected"</c:if> >${category.name}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -30,13 +30,13 @@
 								<th class="blue">操作</th>
 							</tr>
 						</thead>
-						<tbody>
+						<tbody id="productListDetail">
 						<c:forEach var="product" items="${productList}">
 							<tr>
 								<td>${product.name}</td>
 								<td>
 									<a href="${util.path}/product/editProduct.do?productId=${product.id}">编辑</a>
-									<a href="${util.path}/image/addImage.jsf?deleteProductId=${product.id}">删除</a>
+									<a href="${util.path}/product/deleteProduct.do?productId=${product.id}">删除</a>
 									<a href="${util.path}/product/addProductImage.do?productId=${product.id}">查看</a>
 								</td>
 							</tr>
@@ -51,6 +51,19 @@
 	</div>
 	<script type="text/javascript">
 		$("#image").attr("class","active");
+
+		//更换类别，更新产品列表
+		function getProductList(categoryId){
+			$.ajax({
+				url: "${util.path}/image/getProductList.do",
+				data: {
+					categoryId: categoryId
+				},
+				success: function(data) {
+					$("#productListDetail").html(data);
+				}
+			});
+		}
 	</script>
 </body>
 </html>

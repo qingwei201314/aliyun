@@ -12,7 +12,9 @@ import im.gsj.entity.Shop;
 import im.gsj.image.service.ImageService;
 import im.gsj.product.vo.ProductVo;
 import im.gsj.uploadify.service.Uploadify;
+import im.gsj.util.Constant;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
@@ -41,57 +43,100 @@ public class ProductService {
 	private Uploadify uploadify;
 	@Resource
 	private ImageService imageService;
-	
-	public void save(Product product, String phone){
-		Shop shop =shopDao.getByPhone(phone);
+
+	public void save(Product product, String phone) {
+		Shop shop = shopDao.getByPhone(phone);
 		product.setShop_id(shop.getId());
-		if(StringUtils.isEmpty(product.getId())){
+		if (StringUtils.isEmpty(product.getId())) {
 			productDao.save(product);
-		}
-		else{
+		} else {
 			productDao.update(product);
 		}
 	}
-	
+
 	/**
 	 * 取得产品基本信息
 	 */
-	@Transactional(readOnly=true)
-	public ProductVo get(String productId) throws IllegalAccessException, InvocationTargetException{
+	@Transactional(readOnly = true)
+	public ProductVo get(String productId) throws IllegalAccessException,
+			InvocationTargetException {
 		Product product = productDao.get(productId);
 		ProductVo productVo = new ProductVo();
-		BeanUtils.copyProperties(product,productVo);
+		BeanUtils.copyProperties(product, productVo);
 		productVo.setCategory_id(product.getCategory().getId());
 		productVo.setCategoryName(product.getCategory().getName());
-		List<Image> imageList= imageDao.getImageListByProductId(product.getId());
+		List<Image> imageList = imageDao.getImageListByProductId(product
+				.getId());
 		productVo.setImageList(imageList);
 		return productVo;
 	}
-	
-	
-	public ModelMap toEditProduct(String phone, String productId, ModelMap model){
+
+	public ModelMap toEditProduct(String phone, String productId, ModelMap model) {
 		Product product = productDao.get(productId);
-		//查出当前商店的分类
+		// 查出当前商店的分类
 		List<Category> categoryList = categoryService.list(phone);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryId", product.getCategory_id());
 		model.addAttribute("product", product);
 		return model;
 	}
-	
+
 	/**
 	 * 将图片写到磁盘，并保存数据库记录
+	 * 
 	 * @param request
 	 * @param widthXheight
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@Transactional
-	public String upload(HttpServletRequest request, String widthXheight) throws Exception{
+	public String upload(HttpServletRequest request, String widthXheight)
+			throws Exception {
 		String productId = request.getParameter("productId");
-		String phone = (String)request.getSession().getAttribute("phone");
-		String result = uploadify.upload(phone, request,widthXheight);
+		String phone = (String) request.getSession().getAttribute("phone");
+		String result = uploadify.upload(phone, request, widthXheight);
 		result = imageService.saveImage(productId, result);
 		return result;
+	}
+
+	@Transactional
+	public ModelMap deleteProduct(String phone, String productId,
+			String uploadPath, ModelMap model) {
+		// 删除产品图片
+		List<Image> imageList = imageDao.getImageListByProductId(productId);
+		for (Image image : imageList) {
+			String path = image.getPath();
+			String postfix = image.getPostfix();
+			imageDao.delete(image);
+			// 删除物理文件
+			try {
+				String filePath = uploadPath + path + Constant.B + postfix;
+				File file = new File(filePath);
+				file.delete();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			try {
+				String filePath = uploadPath + path + Constant.S + postfix;
+				File file = new File(filePath);
+				file.delete();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//删除产品信息
+		Product product = productDao.get(productId);
+		String categoryId = product.getCategory_id();
+		productDao.delete(product);
+		
+		//查出页面要用到的值
+		List<Category> categoryList = categoryService.list(phone);
+		model.addAttribute("categoryList", categoryList);
+		model.addAttribute("categoryId", categoryId);
+		
+		List<Product> productList =  productDao.queryList("category_id", categoryId);
+		model.addAttribute("productList", productList);
+
+		return null;
 	}
 }

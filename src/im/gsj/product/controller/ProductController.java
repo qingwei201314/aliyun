@@ -7,6 +7,7 @@ import im.gsj.entity.Product;
 import im.gsj.product.service.ProductService;
 import im.gsj.product.vo.ProductVo;
 import im.gsj.util.Constant;
+import im.gsj.util.Util;
 
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -88,34 +89,14 @@ public class ProductController {
 			return null;
 	}
 
-//	public String deleteProduct(String productId, String curCategory) {
-//		productDao.deleteById(productId);
-//		category = curCategory;
-//		HttpSession session = null;
-//		String phone = (String) session.getAttribute(Constant.phone);
-//		productList = productService.getFirstCategoryProduct(phone);
-//		return "/admin/image/addImage";
-//	}
-
-//	public ProductVo getProductVo() throws IllegalAccessException, InvocationTargetException {
-//		HttpServletRequest request =null;
-//		String productId = request.getParameter("productId");
-//		if(productVo.getId() == null && StringUtils.isNotBlank(productId))
-//			productVo = productService.get(productId);
-//		return productVo;
-//	}
-
-
-//	public List<Product> getProductList() {
-//		HttpSession session = null;
-//		String phone = (String) session.getAttribute(Constant.phone);
-//		if(category!=null)
-//		productList = productDao.queryList("category_id", category);
-//		
-//		if (productList == null) 
-//			productList = productService.getFirstCategoryProduct(phone);
-//		
-//		return productList;
-//	}
-
+	/**
+	 * 删除产品
+	 */
+	@RequestMapping(value="deleteProduct.do", method=RequestMethod.GET)
+	public String deleteProduct(@RequestParam("productId") String productId,  HttpServletRequest request, ModelMap model) {
+		String uploadPath = ((Util)request.getServletContext().getAttribute("util")).getUpload();
+		String phone = (String)request.getSession().getAttribute(Constant.phone);
+		model = productService.deleteProduct(phone, productId, uploadPath, model);
+		return "/admin/image/addImage";
+	}
 }
