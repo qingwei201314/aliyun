@@ -17,10 +17,4 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-	<mvc:interceptors>
-		<mvc:interceptor>
-			<mvc:mapping path="/admin/*" />
-			<bean class="im.gsj.util.interceptor.AdminInterceptor" />
-		</mvc:interceptor>
-	</mvc:interceptors>
 </beans>

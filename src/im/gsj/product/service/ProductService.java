@@ -16,6 +16,7 @@ import im.gsj.util.Constant;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -48,6 +49,7 @@ public class ProductService {
 		Shop shop = shopDao.getByPhone(phone);
 		product.setShop_id(shop.getId());
 		if (StringUtils.isEmpty(product.getId())) {
+			product.setCreate_time(new Date());
 			productDao.save(product);
 		} else {
 			productDao.update(product);

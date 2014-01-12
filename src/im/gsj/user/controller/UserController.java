@@ -8,11 +8,9 @@ import im.gsj.user.service.UserService;
 import im.gsj.util.Constant;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +27,6 @@ public class UserController {
 	private ShopService shopService;
 	@Resource 
 	private CityDao cityDao;
-	private User user = new User();
 
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
 	public String login() {
@@ -54,21 +51,4 @@ public class UserController {
 		return resultPath;
 	}
 
-	/**
-	 * 用户注册
-	 */
-	public String saveUser() {
-		userDao.save(user);
-		HttpSession session = null;
-		session.setAttribute(Constant.phone, user.getPhone());
-		return "/shop/addShop";
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
 }

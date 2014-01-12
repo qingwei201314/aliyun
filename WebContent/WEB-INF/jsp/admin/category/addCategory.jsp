@@ -9,7 +9,7 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form action="${util.path}/category/saveCategory.do" method="post">
+		<form action="${util.path}/admin/category/saveCategory.do" method="post">
 			<fieldset>
 				<div style="width: 500px;margin:0 auto;">
 					<table class="bordered-table zebra-striped" id="sortTableExample">
@@ -24,8 +24,8 @@
 							<tr>
 								<td>${category.name}</td>
 								<td>
-									<a href="${util.path}/category/deleteCategory.do?deleteCategoryId=${category.id}">删除</a>
-									<a href="${util.path}/product/toProduct.do?categoryId=${category.id}">添加产品</a>
+									<a href="${util.path}/admin/category/deleteCategory.do?deleteCategoryId=${category.id}">删除</a>
+									<a href="${util.path}/admin/product/toProduct.do?categoryId=${category.id}">添加产品</a>
 								</td>
 							</tr>
 						</c:forEach>

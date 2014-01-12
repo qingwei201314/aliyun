@@ -11,7 +11,7 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form  action="${util.path}/shop/saveShop.do" onsubmit="return beforeSubmit();" method="post">
+		<form  action="${util.path}/admin/shop/saveShop.do" onsubmit="return beforeSubmit();" method="post">
 			<fieldset>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">名称</label>
@@ -66,7 +66,7 @@
 					<div class="div_margin ">
 						<img id="gatePhone"
 							src="${util.path}${util.repository}${shop.gate_url}"
-							style="width: 580px; height: 290px; display: none;<c:if test="${shop.gate_url!=null&& !''.equals(shop.gate_url)}">display:block;</c:if>" />
+							style="width: 580px; height: 290px; margin-bottom:10px; display: none;<c:if test="${shop.gate_url!=null&& !''.equals(shop.gate_url)}">display:block;</c:if>" />
 						<input type="file" name="file_upload" id="file_upload" />
 						<input type="hidden" id="gate_url" name="gate_url" value="${shop.gate_url}" />
 					</div>
@@ -102,7 +102,7 @@
 		//上传大门图片
 		$(function() {
 			  var phone = '${phone}';
-			  var jspPaht = '${util.path}/shop/upload.do?phone=${phone}&widthXheight=580x290';
+			  var jspPaht = '${util.path}/admin/shop/upload.do?phone=${phone}&widthXheight=580x290';
 		      $('#file_upload').uploadify({
 		         'swf'      : '${util.path}/uploadify/uploadify.swf',
 		         'uploader' : jspPaht,

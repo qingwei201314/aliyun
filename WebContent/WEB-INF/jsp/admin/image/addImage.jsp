@@ -35,9 +35,9 @@
 							<tr>
 								<td>${product.name}</td>
 								<td>
-									<a href="${util.path}/product/editProduct.do?productId=${product.id}">编辑</a>
+									<a href="${util.path}/admin/product/editProduct.do?productId=${product.id}">编辑</a>
 									<a href="javascript:void(0)" onclick="deleteProduct('${product.id}')">删除</a>
-									<a href="${util.path}/product/addProductImage.do?productId=${product.id}">查看</a>
+									<a href="${util.path}/admin/product/addProductImage.do?productId=${product.id}">查看</a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -55,9 +55,11 @@
 		//更换类别，更新产品列表
 		function getProductList(categoryId){
 			$.ajax({
-				url: "${util.path}/image/getProductList.do",
+				url: "${util.path}/admin/image/getProductList.do",
+				type: "GET",
 				data: {
-					categoryId: categoryId
+					categoryId: categoryId,
+					date:  new Date()
 				},
 				success: function(data) {
 					$("#productListDetail").html(data);
@@ -68,7 +70,7 @@
 		//删除产品
 		function deleteProduct(productId){
 			if(confirm("确定要删除吗？")){
-				window.location.href="${util.path}/product/deleteProduct.do?productId=" + productId;
+				window.location.href="${util.path}/admin/product/deleteProduct.do?productId=" + productId;
 			}
 		}
 	</script>

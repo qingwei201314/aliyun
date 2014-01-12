@@ -41,4 +41,11 @@ http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
+	<!-- 拦截未登录用户 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/admin/**/*.do" />
+			<bean class="im.gsj.util.interceptor.AdminInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>

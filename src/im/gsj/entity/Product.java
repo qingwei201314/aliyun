@@ -1,11 +1,14 @@
 package im.gsj.entity;
 
+import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name="product")
@@ -21,6 +24,9 @@ public class Product {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="category_id", insertable=false, updatable=false)
 	private Category category;
+	private Date create_time;
+	@OneToMany(mappedBy="product", fetch=FetchType.LAZY)
+	private List<Image> images;
 	
 	public String getId() {
 		return id;
@@ -58,4 +64,17 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+	public Date getCreate_time() {
+		return create_time;
+	}
+	public void setCreate_time(Date create_time) {
+		this.create_time = create_time;
+	}
+	public List<Image> getImages() {
+		return images;
+	}
+	public void setImages(List<Image> images) {
+		this.images = images;
+	}
+	
 }

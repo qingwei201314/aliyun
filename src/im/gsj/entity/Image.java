@@ -1,8 +1,12 @@
 package im.gsj.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name="image")
@@ -14,6 +18,9 @@ public class Image {
 	private String product_id;
 	private String path;
 	private String postfix;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="product_id", insertable=false, updatable=false)
+	private Product product;
 	
 	public Image(){
 	}

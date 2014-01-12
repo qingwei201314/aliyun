@@ -1,5 +1,7 @@
 package im.gsj.dao;
 
+import im.gsj.util.Page;
+
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -69,24 +71,26 @@ public abstract class CommonDao<T> {
 	public void update(T entity) {
 		getSession().update(entity);
 	}
-	
+
 	/**
 	 * 保存或更新记录
+	 * 
 	 * @param entity
 	 */
 	@Transactional
 	public void saveOrUpdate(T entity) {
 		getSession().saveOrUpdate(entity);
 	}
-	
+
 	/**
 	 * 取出指定ID的对象.
+	 * 
 	 * @param entityClass
 	 * @param id
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public T get(Serializable id) {
 		T t = (T) getSession().get(entityClass, id);
 		return t;
@@ -101,7 +105,7 @@ public abstract class CommonDao<T> {
 	public void delete(T entity) {
 		getSession().delete(entity);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public void deleteById(String id) {
@@ -111,41 +115,41 @@ public abstract class CommonDao<T> {
 
 	/**
 	 * 根据某一字段的值查出符合条件的列表
+	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(readOnly=true)
-	public List<T> queryList(String property, Object value){
+	@Transactional(readOnly = true)
+	public List<T> queryList(String property, Object value) {
 		Criteria criteria = getCriteria();
 		criteria.add(Restrictions.eq(property, value));
 		List<T> list = criteria.list();
 		return list;
 	}
-	
+
 	/**
 	 * 根据某一字段的值找出符合条件的第一个对象
+	 * 
 	 * @param property
 	 * @param value
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(readOnly=true)
-	public T query(String property, Object value){
+	@Transactional(readOnly = true)
+	public T query(String property, Object value) {
 		Criteria criteria = getCriteria();
 		criteria.add(Restrictions.eq(property, value));
 		List<T> list = criteria.list();
 		T result = null;
-		if(list !=null && list.size() >0)
+		if (list != null && list.size() > 0)
 			result = list.get(0);
 		return result;
 	}
-	
+
 	/**
 	 * 取得表的总记录数
-	 * 
-	 * @return
 	 */
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public Long getCount(Criteria criteria) {
 		criteria.setProjection(Projections.rowCount());
 		Long totalCount = (Long) criteria.uniqueResult();
@@ -156,7 +160,7 @@ public abstract class CommonDao<T> {
 	 * 取得指定页的记录
 	 */
 	@SuppressWarnings("unchecked")
-	@Transactional(readOnly=true)
+	@Transactional(readOnly = true)
 	public List<T> listByPage(Criteria criteria, int pageNo, int pageSize) {
 		int firstResult = (pageNo - 1) * pageSize;
 		criteria.setFirstResult(firstResult);
@@ -165,15 +169,30 @@ public abstract class CommonDao<T> {
 		return list;
 	}
 
-	// public Page<T> getPage(Criteria criteria, int pageNo, int pageSize) {
-	// // 查出总记录数.
-	// Long total = getCount(criteria);
-	// Page<T> page = new Page<T>(pageNo, pageSize, total);
-	// // 查找当前页记录.
-	// List<T> list = listByPage(criteria, pageNo, pageSize);
-	//
-	// page.setList(list);
-	// return page;
-	// }
+	/**
+	 * 用默认的pageSize
+	 */
+	public Page<T> getPage(Criteria criteria, int pageNo) {
+		Page<T> page = new Page<T>();
+		page.setPageNo(pageNo);
+		// 查找当前页记录.
+		List<T> list = listByPage(criteria, pageNo, page.getPageSize());
+		page.setList(list);
+		// 查出总记录数.
+		Long total = getCount(criteria);
+		page.setTotal(total);
+		
+		return page;
+	}
+
+	public Page<T> getPage(Criteria criteria, int pageNo, int pageSize) {
+		// 查出总记录数.
+		Long total = getCount(criteria);
+		Page<T> page = new Page<T>(pageNo, pageSize, total);
+		// 查找当前页记录.
+		List<T> list = listByPage(criteria, pageNo, pageSize);
+		page.setList(list);
+		return page;
+	}
 
 }

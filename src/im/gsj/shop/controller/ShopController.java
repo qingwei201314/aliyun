@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/shop")
+@RequestMapping("/admin/shop")
 public class ShopController {
 	@Resource
 	private ShopService shopService;

@@ -15,7 +15,7 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
-		<form action="${util.path}/product/saveProduct.do" method="post">
+		<form action="${util.path}/admin/product/saveProduct.do" method="post">
 			<input type="hidden" name="id" value="${product.id}" />
 			<fieldset>
 				<div class="clearfix">
