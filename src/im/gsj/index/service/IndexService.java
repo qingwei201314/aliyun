@@ -1,5 +1,6 @@
 package im.gsj.index.service;
 
+import im.gsj.city.service.CityService;
 import im.gsj.dao.CategoryDao;
 import im.gsj.dao.ProductDao;
 import im.gsj.entity.Category;
@@ -8,6 +9,7 @@ import im.gsj.entity.Product;
 import im.gsj.entity.Shop;
 import im.gsj.index.vo.ProductVo;
 import im.gsj.shop.service.ShopService;
+import im.gsj.util.Constant;
 import im.gsj.util.Page;
 
 import java.util.List;
@@ -27,11 +29,17 @@ public class IndexService {
 	private CategoryDao categoryDao;
 	@Resource
 	private ProductDao productDao;
+	@Resource
+	private CityService cityService;
 	
 	@Transactional(readOnly=true)
 	public ModelMap home(String phone, int pageNo, ModelMap model){
 		Shop shop = shopService.getShopByPhone(phone);
 		model.addAttribute("shop", shop);
+		//取出省市区
+		Integer cityId = shop.getDistrict();
+		String provinceTownCity = cityService.getByShopDistrict(cityId);
+		model.addAttribute("provinceTownCity", provinceTownCity);
 		List<Category> categoryList = categoryDao.getByShop(shop.getId());
 		model.addAttribute("categoryList", categoryList);
 		Page<Product> originalPage = productDao.getNewProduct(shop.getId(), pageNo);
@@ -53,7 +61,7 @@ public class IndexService {
 			//第一张图片
 			List<Image> images = product.getImages();
 			if(images!=null && images.size() >0){
-				productVo.setPath(images.get(0).getPath());
+				productVo.setPath(images.get(0).getPath()+ Constant.S);
 				productVo.setPostfix(images.get(0).getPostfix());
 			}
 			productVoList.add(productVo);

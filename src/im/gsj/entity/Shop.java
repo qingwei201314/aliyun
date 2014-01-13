@@ -11,7 +11,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name = "shop")
 public class Shop {
-
 	@Id
 	@GeneratedValue(generator = "generator")
 	@GenericGenerator(name = "generator", strategy = "uuid.hex")

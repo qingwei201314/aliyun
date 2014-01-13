@@ -27,9 +27,6 @@ public class ImageService {
 	
 	/**
 	 * 保存图片的数据库记录
-	 * @param product_id
-	 * @param url
-	 * @return
 	 */
 	public String saveImage(String product_id, String url){
 		url = StringUtils.substringBefore(url, ",");

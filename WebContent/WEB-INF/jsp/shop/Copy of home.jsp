@@ -43,20 +43,32 @@
 		</div>
 
 		<!-- Example row of columns -->
-		<div class="row" style="width: 960px;">
-			<c:forEach var="productVo" items="${page.list }">
-				<div class="span-one-third">
-					<h4>${productVo.name}</h4>
-					<p>
-						<a href="canteen/viewCanteen.html">
-							<img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" />
-						</a>
-					</p>
-				</div>
-			</c:forEach>
+		<div class="row">
+			<div class="span-one-third">
+				<h4>1.吉祥餐盘</h4>
+				<p>
+					<a href="canteen/viewCanteen.html"><img class="product"
+						src="../img/shaoxing/19.jpg" />
+					</a>
+				</p>
+			</div>
+			<div class="span-one-third">
+				<h4>2.富贵餐盘</h4>
+				<p>
+					<img class="product" src="../img/shaoxing/19.jpg" />
+				</p>
+			</div>
+			<div class="span-one-third">
+				<h4>3.幸福水壶</h4>
+				<p>
+					<img class="product" src="../img/shaoxing/6.jpg" />
+				</p>
+			</div>
 		</div>
 
-		<%@ include file="/commonjsp/footer.jsp"%>
+		<footer>
+		<p>&copy; 绍兴五金厂 2013</p>
+		</footer>
 	</div>
 </body>
 </html>
