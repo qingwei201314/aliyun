@@ -27,9 +27,8 @@ public class ProductDao extends CommonDao<Product>{
 	 * 取得某一商店某一类别的产品
 	 */
 	@SuppressWarnings("unchecked")
-	public List<Product> listProduct(String shopId, String categoryId){
+	public List<Product> listProduct(String categoryId){
 		Criteria criteria = getCriteria();
-		criteria.add(Restrictions.eq("shop_id", shopId));
 		criteria.add(Restrictions.eq("category_id", categoryId));
 		criteria.addOrder(Order.desc("create_time"));
 		List<Product> productList = criteria.list();

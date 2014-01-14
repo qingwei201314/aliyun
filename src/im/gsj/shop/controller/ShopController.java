@@ -34,10 +34,6 @@ public class ShopController {
 	
 	/**
 	 * 上传大门图片
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "upload.do", method = RequestMethod.POST)
 	public String upload(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -62,11 +58,6 @@ public class ShopController {
 	
 	/**
 	 * 跳转到商店信息页面
-	 * @param request
-	 * @param model
-	 * @return
-	 * @throws IllegalAccessException
-	 * @throws InvocationTargetException
 	 */
 	@RequestMapping(value = "addShop.do", method = RequestMethod.GET)
 	public String addShop(HttpSession session, ModelMap model) throws IllegalAccessException, InvocationTargetException {

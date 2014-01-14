@@ -3,6 +3,7 @@ package im.gsj.index.service;
 import im.gsj.city.service.CityService;
 import im.gsj.dao.CategoryDao;
 import im.gsj.dao.ProductDao;
+import im.gsj.dao.ShopDao;
 import im.gsj.entity.Category;
 import im.gsj.entity.Image;
 import im.gsj.entity.Product;
@@ -31,6 +32,8 @@ public class IndexService {
 	private ProductDao productDao;
 	@Resource
 	private CityService cityService;
+	@Resource
+	private ShopDao shopDao;
 	
 	@Transactional(readOnly=true)
 	public ModelMap home(String phone, int pageNo, ModelMap model){
@@ -67,5 +70,19 @@ public class IndexService {
 			productVoList.add(productVo);
 		}
 		return newPage;
+	}
+	
+	/**
+	 * 取出头部和尾部
+	 * @param phone
+	 * @param model
+	 * @return
+	 */
+	public ModelMap getHeadAndFooter(String shopId, ModelMap model){
+		Shop shop = shopDao.get(shopId);
+		model.addAttribute("shop", shop);
+		List<Category> categoryList = categoryDao.getByShop(shop.getId());
+		model.addAttribute("categoryList", categoryList);
+		return model;
 	}
 }

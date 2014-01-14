@@ -1,17 +1,23 @@
 package im.gsj.category.service;
 
 import im.gsj.dao.CategoryDao;
+import im.gsj.dao.ImageDao;
 import im.gsj.dao.ProductDao;
 import im.gsj.dao.ShopDao;
+import im.gsj.dao.dto.ImageDto;
 import im.gsj.entity.Category;
 import im.gsj.entity.Image;
 import im.gsj.entity.Product;
 import im.gsj.entity.Shop;
+import im.gsj.index.service.IndexService;
 import im.gsj.index.vo.ProductVo;
 import im.gsj.util.Constant;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +31,10 @@ public class CategoryService {
 	private ShopDao shopDao;
 	@Resource
 	private ProductDao productDao;
+	@Resource
+	private ImageDao imageDao;
+	@Resource
+	private IndexService indexService;
 	
 	/**
 	 * 取得当前店的所有分类
@@ -43,14 +53,20 @@ public class CategoryService {
 	}
 	
 	/**
-	 * 查出某一商店某一类别的产品
+	 * 查出某一类别的产品
 	 */
-	public ModelMap listProduct(String shopId, String categoryId, ModelMap model){
-		List<Product> productList = productDao.listProduct(shopId, categoryId);
+	@Transactional(readOnly=true)
+	public ModelMap listProduct(String shopId, String categoryId,int pageNo, ModelMap model){
+		model.addAttribute("categoryId", categoryId);
+		List<Product> productList = productDao.listProduct(categoryId);
 		List<ProductVo> productVoList = getFirstProductImage(productList);
 		model.addAttribute("productVoList", productVoList);
-		
-		
+		List<ImageDto> imageDtoList = imageDao.pageByCategory(categoryId,pageNo);
+		for(ImageDto imageDto: imageDtoList)
+			imageDto.setPath(imageDto.getPath() + Constant.S);
+		model.addAttribute("imageDtoList", imageDtoList);
+		//取出头部和尾部的值
+		model = indexService.getHeadAndFooter(shopId, model);
 		return model;
 	}
 	

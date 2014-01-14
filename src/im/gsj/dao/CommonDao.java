@@ -1,5 +1,6 @@
 package im.gsj.dao;
 
+import im.gsj.entity.Image;
 import im.gsj.util.Page;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -195,4 +197,10 @@ public abstract class CommonDao<T> {
 		return page;
 	}
 
+	public Query listByHql(String hql, int pageNo, int pageSize) {
+		Query query = getSession().createQuery(hql);
+		query.setFirstResult((pageNo -1)*pageSize);
+		query.setMaxResults(pageSize);
+		return query;
+	}
 }

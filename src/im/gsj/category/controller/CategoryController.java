@@ -51,8 +51,6 @@ public class CategoryController {
 	
 	/**
 	 * 跳转到类别页面
-	 * @param request
-	 * @return
 	 */
 	@RequestMapping(value="addCategory.do", method=RequestMethod.GET)
 	public String addCategory(HttpServletRequest request, ModelMap model) {
