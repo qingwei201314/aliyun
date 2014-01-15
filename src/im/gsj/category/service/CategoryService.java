@@ -88,4 +88,16 @@ public class CategoryService {
 		}
 		return productVoList;
 	} 
+	
+	/**
+	 * 查出更多图片
+	 */
+	@Transactional(readOnly=true)
+	public ModelMap moreImage(String categoryId,int pageNo, ModelMap model){
+		List<ImageDto> imageDtoList = imageDao.pageByCategory(categoryId,pageNo);
+		for(ImageDto imageDto: imageDtoList)
+			imageDto.setPath(imageDto.getPath() + Constant.S);
+		model.addAttribute("imageDtoList", imageDtoList);
+		return model;
+	}
 }

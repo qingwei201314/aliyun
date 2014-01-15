@@ -24,4 +24,10 @@ public class CategoryViewController {
 		model = categoryService.listProduct(shopId, categoryId, pageNo, model);
 		return "/category/listProduct";
 	}
+	
+	@RequestMapping(value="moreImage.do", method=RequestMethod.GET)
+	public String moreImage(@RequestParam("categoryId") String categoryId, @RequestParam("pageNo") int pageNo, ModelMap model){
+		model = categoryService.moreImage(categoryId, pageNo, model);
+		return "/category/moreImage";
+	}
 }

@@ -52,7 +52,10 @@ public class ProductService {
 			product.setCreate_time(new Date());
 			productDao.save(product);
 		} else {
-			productDao.update(product);
+			Product oldProduct = productDao.get(product.getId());
+			product.setCreate_time(oldProduct.getCreate_time());
+			BeanUtils.copyProperties(product, oldProduct);
+			productDao.update(oldProduct);
 		}
 	}
 
