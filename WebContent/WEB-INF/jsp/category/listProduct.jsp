@@ -11,7 +11,7 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/topbar.jsp"%>
 	
-	<div class="container">
+	<div id="container" class="container">
 		<!-- Example row of columns -->
 		<div class="row" style="width: 960px;">
 			<c:forEach var="productVo" items="${productVoList}">
@@ -38,14 +38,14 @@
     	</div>
       
     <!-- 加载更多信息 -->
-	  <div class="alert-message block-message success" style="margin-top: 28px;width: 400px;margin-left: auto;margin-right: auto;">
-      	<a href="${util.path}/category/moreImage.do?categoryId=${categoryId}&pageNo=2" ><p style="text-align: center;">数据加载中</p></a>
+	  <div  class="alert-message block-message success" style="margin-top: 28px;width: 400px;margin-left: auto;margin-right: auto;">
+      	<p style="text-align: center;">数据加载中</p>
       </div>
-      
+    
     <div class="navigation">
         <ul>
             <li>1</li>
-            <li class="next-posts"><a href="javascript:void(0)" onclick="test()">2</a></li>
+            <li class="next-posts"><a href="${util.path }/category/moreImage.do?categoryId=${categoryId}&pageNo=2">2</a></li>
         </ul>
     </div>
     
@@ -56,21 +56,17 @@
 	$("#${categoryId}").attr("class", "active");
 
 	//加载更多页面
-    $(document).ready(function() {
-        jQuery.ias({
-            container : '.img_detail',
-            item: '.post',
-            pagination: '.img_detail .navigation',
-            next: '.navigation a',
-            loader: '<img src="https://raw.github.com/webcreate/infinite-ajax-scroll/master/dist/images/loader.gif"/>',
-            triggerPageThreshold: 2
+        $(document).ready(function() {
+            jQuery.ias({
+                container : '.img_detail',
+                item: '.post',
+                pagination: '#content .navigation',
+                next: '.test a',
+                loader: '<img src="https://raw.github.com/webcreate/infinite-ajax-scroll/master/dist/images/loader.gif"/>',
+                triggerPageThreshold: 2
+            });
         });
-    });
 
-    function test(){
-    	var myPath = "${util.path}/category/moreImage.do?categoryId=${categoryId}&pageNo=2";
-    	alert(myPath);
-    }
 </script>
 </body>
 </html>
