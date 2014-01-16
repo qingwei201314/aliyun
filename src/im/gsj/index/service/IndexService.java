@@ -39,6 +39,7 @@ public class IndexService {
 	public ModelMap home(String phone, int pageNo, ModelMap model){
 		Shop shop = shopService.getShopByPhone(phone);
 		model.addAttribute("shop", shop);
+		model.addAttribute("userPhone", shop.getUser().getPhone());
 		//取出省市区
 		Integer cityId = shop.getDistrict();
 		String provinceTownCity = cityService.getByShopDistrict(cityId);
@@ -74,13 +75,11 @@ public class IndexService {
 	
 	/**
 	 * 取出头部和尾部
-	 * @param phone
-	 * @param model
-	 * @return
 	 */
 	public ModelMap getHeadAndFooter(String shopId, ModelMap model){
 		Shop shop = shopDao.get(shopId);
 		model.addAttribute("shop", shop);
+		model.addAttribute("userPhone", shop.getUser().getPhone());
 		List<Category> categoryList = categoryDao.getByShop(shop.getId());
 		model.addAttribute("categoryList", categoryList);
 		return model;

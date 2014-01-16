@@ -31,7 +31,7 @@
     	<div id="img_detail" class="img_detail">
     		<c:forEach var="imageVo" items="${imageDtoList}">
 	    		<dd>
-		    		<h4>dddd ${imageVo.name}</h4>
+		    		<h4>${imageVo.name}</h4>
 			    	<img class="product_detail" src="${util.path }${util.repository }${imageVo.path }${imageVo.postfix }">
 		    	</dd>
 	    	</c:forEach>
