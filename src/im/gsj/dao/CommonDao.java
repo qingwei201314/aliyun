@@ -1,6 +1,5 @@
 package im.gsj.dao;
 
-import im.gsj.entity.Image;
 import im.gsj.util.Page;
 
 import java.io.Serializable;
@@ -10,12 +9,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -201,6 +202,34 @@ public abstract class CommonDao<T> {
 		Query query = getSession().createQuery(hql);
 		query.setFirstResult((pageNo -1)*pageSize);
 		query.setMaxResults(pageSize);
+		return query;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public Page pageByHql(String hql, String selectCount, int pageNo, Class<?> resultClass, Object... params) {
+		//查出总记录数
+		String countHql = StringUtils.substringAfter(hql, "from");
+		countHql = selectCount + " from " + countHql;
+		Query query = getSession().createQuery(countHql);
+		query = setPrameter(query, params);
+		Long total = (Long)query.uniqueResult();
+		
+		Page page = new Page(pageNo, total);
+		if(total >= (pageNo-1) * page.getPageSize()){
+			Query queryList = listByHql(hql, pageNo, page.getPageSize());
+			queryList = setPrameter(queryList, params);
+			queryList.setResultTransformer(Transformers.aliasToBean(resultClass));
+			List list = queryList.list();
+			page.setList(list);
+		}
+		return page;
+	}
+	
+	private Query setPrameter(Query query, Object... params){
+		if(params !=null && params.length>0){
+			for(int i=0; i< params.length; i++)
+				query.setParameter(i, params[i]);
+		}
 		return query;
 	}
 }

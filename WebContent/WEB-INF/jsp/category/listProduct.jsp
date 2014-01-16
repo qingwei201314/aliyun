@@ -11,7 +11,7 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/topbar.jsp"%>
 	
-	<div id="container" class="container">
+	<div class="container">
 		<!-- Example row of columns -->
 		<div class="row" style="width: 960px;">
 			<c:forEach var="productVo" items="${productVoList}">
@@ -28,44 +28,55 @@
       </div>
       
     <!-- 显示详细图片 -->
-    	<div class="img_detail">
+    	<div id="img_detail" class="img_detail">
     		<c:forEach var="imageVo" items="${imageDtoList}">
-	    		<dd class="post">
-		    		<h4>${imageVo.name}</h4>
+	    		<dd>
+		    		<h4>dddd ${imageVo.name}</h4>
 			    	<img class="product_detail" src="${util.path }${util.repository }${imageVo.path }${imageVo.postfix }">
 		    	</dd>
 	    	</c:forEach>
     	</div>
       
     <!-- 加载更多信息 -->
-	  <div  class="alert-message block-message success" style="margin-top: 28px;width: 400px;margin-left: auto;margin-right: auto;">
-      	<p style="text-align: center;">数据加载中</p>
+	  <div id="loader"  class="alert-message block-message success" style="margin-top: 28px;width: 400px;margin-left: auto;margin-right: auto;">
+      	<p style="text-align: center;"><img src="${util.path}/img/loader.gif" style="margin-right: 10px;vertical-align: top;">数据加载中</p>
       </div>
     
-    <div class="navigation">
-        <ul>
-            <li>1</li>
-            <li class="next-posts"><a href="${util.path }/category/moreImage.do?categoryId=${categoryId}&pageNo=2">2</a></li>
-        </ul>
-    </div>
-    
-	<%@ include file="/commonjsp/footer.jsp"%>
+	  <%@ include file="/commonjsp/footer.jsp"%>
 	</div>
 	
 <script type="text/javascript">
 	$("#${categoryId}").attr("class", "active");
-
+	
 	//加载更多页面
-        $(document).ready(function() {
-            jQuery.ias({
-                container : '.img_detail',
-                item: '.post',
-                pagination: '#content .navigation',
-                next: '.test a',
-                loader: '<img src="https://raw.github.com/webcreate/infinite-ajax-scroll/master/dist/images/loader.gif"/>',
-                triggerPageThreshold: 2
-            });
-        });
+    $(document).ready(function() {
+		var pageNo=2;   //加载更多页的页码
+		var result="";  //返回的页面
+    	$(window).scroll(function(){
+    		var scrollTop = $(this).scrollTop();
+			var windowHeight = $(this).height();
+    		var scrollHeight = $(document).height();
+    		if(result.indexOf("id='theLast'")<0 && scrollTop + windowHeight == scrollHeight){
+    			$.ajax({
+    				url: "${util.path}/category/moreImage.do",
+    				data: {
+    					categoryId: "${categoryId}",
+    					pageNo: pageNo
+    				},
+    				success: function( data ) {
+    					result = data;
+    					if(result.indexOf("id='theLast'") <0){
+            				$("#img_detail").append(data);
+    					}
+    					else{
+							$("#loader").html(result);
+						}
+        				pageNo++;
+    				}
+    			});
+    		}
+    	});
+    });
 
 </script>
 </body>
