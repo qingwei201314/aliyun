@@ -28,7 +28,7 @@
 		</div>
 
 		<!-- 加载更多信息 -->
-		<div class="alert-message block-message success"
+		<div id="loader" class="alert-message block-message success"
 			style="margin-top: 28px; width: 400px; margin-left: auto; margin-right: auto;">
 			<p style="text-align: center;"><img src="${util.path}/img/loader.gif" style="margin-right: 10px;vertical-align: top;">数据加载中</p>
 		</div>

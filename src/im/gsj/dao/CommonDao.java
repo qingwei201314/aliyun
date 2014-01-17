@@ -154,6 +154,7 @@ public abstract class CommonDao<T> {
 	 */
 	@Transactional(readOnly = true)
 	public Long getCount(Criteria criteria) {
+		criteria.setFirstResult(0);
 		criteria.setProjection(Projections.rowCount());
 		Long totalCount = (Long) criteria.uniqueResult();
 		return totalCount;
@@ -165,6 +166,7 @@ public abstract class CommonDao<T> {
 	@SuppressWarnings("unchecked")
 	@Transactional(readOnly = true)
 	public List<T> listByPage(Criteria criteria, int pageNo, int pageSize) {
+		criteria.setProjection(null);
 		int firstResult = (pageNo - 1) * pageSize;
 		criteria.setFirstResult(firstResult);
 		criteria.setMaxResults(pageSize);
@@ -178,12 +180,16 @@ public abstract class CommonDao<T> {
 	public Page<T> getPage(Criteria criteria, int pageNo) {
 		Page<T> page = new Page<T>();
 		page.setPageNo(pageNo);
-		// 查找当前页记录.
-		List<T> list = listByPage(criteria, pageNo, page.getPageSize());
-		page.setList(list);
+		
 		// 查出总记录数.
 		Long total = getCount(criteria);
 		page.setTotal(total);
+		
+		// 查找当前页记录.
+		if(total >= (pageNo-1) * page.getPageSize()){
+			List<T> list = listByPage(criteria, pageNo, page.getPageSize());
+			page.setList(list);
+		}
 		
 		return page;
 	}

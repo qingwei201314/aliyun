@@ -36,7 +36,7 @@ public class ImageDao  extends CommonDao<Image>{
 	 */
 	@Transactional(readOnly=true)
 	public List<Image> pageImageByProduct(String productId, int pageNo ){
-		Criteria criteria = super.getCriteria();
+		Criteria criteria = getCriteria();
 		criteria.add(Restrictions.eq("product_id", productId));
 		Page<Image> page = getPage(criteria, pageNo);
 		return page.getList();

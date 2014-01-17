@@ -154,10 +154,6 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public ModelMap viewProduct(String productId, int pageNo, ModelMap model) throws IllegalAccessException, InvocationTargetException{
 		ProductVo productVo = viewProductWithImage(productId, pageNo);
-		List<Image> imageList = productVo.getImageList();
-		for(Image image: imageList){
-			image.setPath(image.getPath() + Constant.B);
-		}
 		model.addAttribute("productVo", productVo);
 		model.addAttribute("categoryId", productVo.getCategory_id()); //类别id,用于在头部的高亮
 		
@@ -179,7 +175,18 @@ public class ProductService {
 		productVo.setCategory_id(product.getCategory().getId());
 		productVo.setCategoryName(product.getCategory().getName());
 		List<Image> imageList = imageDao.pageImageByProduct(product.getId(), pageNo);
+		imageList = addFormate(imageList);
 		productVo.setImageList(imageList);
 		return productVo;
+	}
+	
+	/**
+	 * 增加图片规格
+	 */
+	private List<Image> addFormate(List<Image> imageList){
+		for(Image image: imageList){
+			image.setPath(image.getPath() + Constant.B);
+		}
+		return imageList;
 	}
 }
