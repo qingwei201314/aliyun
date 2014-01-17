@@ -10,6 +10,7 @@ import im.gsj.entity.Image;
 import im.gsj.entity.Product;
 import im.gsj.entity.Shop;
 import im.gsj.image.service.ImageService;
+import im.gsj.index.service.IndexService;
 import im.gsj.product.vo.ProductVo;
 import im.gsj.uploadify.service.Uploadify;
 import im.gsj.util.Constant;
@@ -44,6 +45,8 @@ public class ProductService {
 	private Uploadify uploadify;
 	@Resource
 	private ImageService imageService;
+	@Resource
+	private IndexService indexService;
 
 	public void save(Product product, String phone) {
 		Shop shop = shopDao.getByPhone(phone);
@@ -143,5 +146,40 @@ public class ProductService {
 		model.addAttribute("productList", productList);
 
 		return null;
+	}
+	
+	/**
+	 * 取出产品的详细
+	 */
+	@Transactional(readOnly = true)
+	public ModelMap viewProduct(String productId, int pageNo, ModelMap model) throws IllegalAccessException, InvocationTargetException{
+		ProductVo productVo = viewProductWithImage(productId, pageNo);
+		List<Image> imageList = productVo.getImageList();
+		for(Image image: imageList){
+			image.setPath(image.getPath() + Constant.B);
+		}
+		model.addAttribute("productVo", productVo);
+		model.addAttribute("categoryId", productVo.getCategory_id()); //类别id,用于在头部的高亮
+		
+		//取出头部和尾部的参数
+		model = indexService.getHeadAndFooter(productVo.getShop_id(), model);
+		
+		return model;
+	}
+	
+	/**
+	 * 取得产品信息以及图片信息
+	 */
+	@Transactional(readOnly = true)
+	public ProductVo viewProductWithImage(String productId, int pageNo) throws IllegalAccessException,
+			InvocationTargetException {
+		Product product = productDao.get(productId);
+		ProductVo productVo = new ProductVo();
+		BeanUtils.copyProperties(product, productVo);
+		productVo.setCategory_id(product.getCategory().getId());
+		productVo.setCategoryName(product.getCategory().getName());
+		List<Image> imageList = imageDao.pageImageByProduct(product.getId(), pageNo);
+		productVo.setImageList(imageList);
+		return productVo;
 	}
 }

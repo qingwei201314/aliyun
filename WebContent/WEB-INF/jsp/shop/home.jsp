@@ -48,7 +48,7 @@
 				<div class="span-one-third">
 					<h4>${productVo.name}</h4>
 					<p>
-						<a href="canteen/viewCanteen.html">
+						<a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1">
 							<img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" />
 						</a>
 					</p>
