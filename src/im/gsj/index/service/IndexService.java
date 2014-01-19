@@ -2,10 +2,12 @@ package im.gsj.index.service;
 
 import im.gsj.city.service.CityService;
 import im.gsj.dao.CategoryDao;
+import im.gsj.dao.MapDao;
 import im.gsj.dao.ProductDao;
 import im.gsj.dao.ShopDao;
 import im.gsj.entity.Category;
 import im.gsj.entity.Image;
+import im.gsj.entity.Map;
 import im.gsj.entity.Product;
 import im.gsj.entity.Shop;
 import im.gsj.index.vo.ProductVo;
@@ -34,6 +36,8 @@ public class IndexService {
 	private CityService cityService;
 	@Resource
 	private ShopDao shopDao;
+	@Resource
+	private MapDao mapDao;
 	
 	@Transactional(readOnly=true)
 	public ModelMap home(String phone, int pageNo, ModelMap model){
@@ -49,6 +53,10 @@ public class IndexService {
 		Page<Product> originalPage = productDao.getNewProduct(shop.getId(), pageNo);
 		Page<ProductVo> page  =  getFirstProductImage(originalPage);
 		model.addAttribute("page", page);
+		
+		//如果有地图信息，则显示地图
+		Map map = mapDao.query("shop_id", shop.getId());
+		model.addAttribute("map", map);
 		return model;
 	}
 	
@@ -76,6 +84,7 @@ public class IndexService {
 	/**
 	 * 取出头部和尾部
 	 */
+	@Transactional(readOnly=true)
 	public ModelMap getHeadAndFooter(String shopId, ModelMap model){
 		Shop shop = shopDao.get(shopId);
 		model.addAttribute("shop", shop);

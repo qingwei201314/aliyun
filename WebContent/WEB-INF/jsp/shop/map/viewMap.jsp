@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <%@ include file="/commonjsp/head.jsp"%>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Hello, World</title>
 <style type="text/css">
 html {
 	height: 100%
@@ -20,22 +22,22 @@ body {
 	height: 100%
 }
 </style>
-<script
-	src="http://api.map.baidu.com/api?v=1.5&ak=6Yv3muNeAAYjqGx2a9IYl6XC"
-	type="text/javascript"></script>
-<title>地图位置</title>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=1.2&ak=Pv6hBzRYLwB9kjEGGIMXHr7B"></script>
 </head>
+
 <body>
-<div id="container"></div>
-
+<%@ include file="/commonjsp/topbar.jsp"%>
+	<div id="container"></div>
 	<script type="text/javascript">
-		var map = new BMap.Map("container");
-		map.addControl(new BMap.NavigationControl());  
-		var point = new BMap.Point(116.404, 39.915);
+		var map = new BMap.Map("container"); // 创建地图实例 
+		var opts = {offset: new BMap.Size(3, 50)}; 
+		map.addControl(new BMap.NavigationControl(opts)); 
+		map.enableScrollWheelZoom(); 
+		var point = new BMap.Point(${map.longitude}, ${map.latitude}); // 创建点坐标  
 		var marker = new BMap.Marker(point);        // 创建标注    
-		map.addOverlay(marker);  
-		map.centerAndZoom(point, 15);
-
+		map.addOverlay(marker);   
+		map.centerAndZoom(point, 16); // 初始化地图，设置中心点坐标和地图级别
 	</script>
 </body>
 </html>

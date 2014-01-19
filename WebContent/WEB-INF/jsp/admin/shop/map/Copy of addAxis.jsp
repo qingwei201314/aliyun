@@ -4,7 +4,7 @@
 <html>
 <head>
 <%@ include file="/commonjsp/head.jsp"%>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2&ak=mQe3OOzL9rwQpf1hXMGO0afz"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=mQe3OOzL9rwQpf1hXMGO0afz"></script>
 <script type="text/javascript" src="${util.path}/js/MarkerTool.js"></script>
 <title>地图定位</title>
 </head>
@@ -54,10 +54,6 @@
 		  if (point) {
 		    map.centerAndZoom(point, 12);
 		  }
-		  else{
-			var point = new BMap.Point(116.404, 39.915);
-			map.centerAndZoom(point, 12);
-	      }
 		}, "");
 	</c:if>
 	

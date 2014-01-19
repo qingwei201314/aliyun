@@ -35,9 +35,11 @@
 							</tr>
 						</table>
 					</dd>
+					<c:if test="${map!=null&& map.longitude!=null }">
 					<dd style="text-align: right;">
-						<a class="btn primary large">查看地图</a>
+						<a href="${util.path }/shop/map/viewMap.do?shopId=${shop.id}" class="btn primary large">查看地图</a>
 					</dd>
+					</c:if>
 				</dl>
 			</div>
 		</div>

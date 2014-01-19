@@ -15,6 +15,8 @@
 				<li id="image"><a href="${util.path}/admin/image/addImage.do">添加图片</a></li>
 				<li class="arrow_img"></li>
 				<li id="about"><a href="${util.path}/admin/about/addAbout.do">关于我们</a></li>
+				<li class="arrow_img"></li>
+				<li id="map"><a href="${util.path}/admin/shop/map/addAxis.do">地图定位</a></li>
 			</ul>
 		</div>
 	</div>
