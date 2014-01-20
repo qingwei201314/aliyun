@@ -34,4 +34,16 @@ public class ProductDao extends CommonDao<Product>{
 		List<Product> productList = criteria.list();
 		return productList;
 	}
+	
+	/**
+	 * 根据关键字查询某一商店的产品
+	 */
+	public Page<Product> searchProduct(String shopId, String q, int pageNo){
+		q = "%" + q + "%";
+		Criteria criteria = getCriteria();
+		criteria.add(Restrictions.eq("shop_id", shopId));
+		criteria.add(Restrictions.or(Restrictions.like("name", q), Restrictions.like("description", q)));
+		Page<Product> page= getPage(criteria, pageNo);
+		return page;
+	}
 }

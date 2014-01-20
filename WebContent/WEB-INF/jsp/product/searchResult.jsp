@@ -21,6 +21,29 @@
 					</p>
 				</div>
 			</c:forEach>
+			<c:if test="${page.list==null||page.list.size()<=0 }">
+			    <div class="span4">
+      <h2>Popovers</h2>
+      <p>Use popovers to provide subtextual information to a page without affecting layout.</p>
+      <p><a class="btn js-btn" href="./javascript.html#popover">Get the javascript &raquo;</a></p>
+    </div>
+    <div class="span12">
+      <div class="well popover-well">
+         <div class="popover-wrapper">
+          <div class="popover left">
+            <div class="arrow"></div>
+            <div class="inner">
+              <h3 class="title">Popover Title</h3>
+              <div class="content">
+                <p>Etiam porta sem malesuada magna mollis euismod. Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+              </div>
+            </div>
+          </div>
+          <img class="large-bird" src="assets/img/bird.png" >
+        </div>
+      </div>
+    </div>
+			</c:if>
 		</div>
 
 		<%@ include file="/commonjsp/footer.jsp"%>

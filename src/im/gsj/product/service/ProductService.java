@@ -196,7 +196,7 @@ public class ProductService {
 	 */
 	@Transactional(readOnly=true)
 	public Page<im.gsj.index.vo.ProductVo> search(String shopId, String q, int pageNo){
-		Page<Product> originalPage = productDao.getNewProduct(shopId, pageNo);
+		Page<Product> originalPage = productDao.searchProduct(shopId, q, pageNo);
 		Page<im.gsj.index.vo.ProductVo> page  =  indexService.getFirstProductImage(originalPage);
 		return page;
 	}
