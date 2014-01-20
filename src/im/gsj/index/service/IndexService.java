@@ -63,7 +63,7 @@ public class IndexService {
 	/**
 	 * 取得每个产品的第一张图片
 	 */
-	private Page<ProductVo> getFirstProductImage(Page<Product> page){
+	public Page<ProductVo> getFirstProductImage(Page<Product> page){
 		Page<ProductVo> newPage = new Page<ProductVo>(page.getPageNo(), page.getTotal());
 		List<ProductVo> productVoList = newPage.getList();
 		List<Product> productList = page.getList();

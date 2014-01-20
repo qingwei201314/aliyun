@@ -1,10 +1,15 @@
 package im.gsj.product.controller;
 
 import im.gsj.dao.ImageDao;
+import im.gsj.index.service.IndexService;
 import im.gsj.product.service.ProductService;
 import im.gsj.product.vo.ProductVo;
+import im.gsj.util.Page;
+
 import java.lang.reflect.InvocationTargetException;
+
 import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +23,8 @@ public class ProductViewController {
 	private ProductService productService;
 	@Resource
 	private ImageDao imageDao;
+	@Resource
+	private IndexService indexService;
 	
 	/**
 	 * 跳转到产品详细页面
@@ -46,5 +53,18 @@ public class ProductViewController {
 		ProductVo productVo = productService.viewProductWithImage(productId, pageNo);
 		model.addAttribute("productVo", productVo);
 		return "/product/moreImage";
+	}
+	
+	/**
+	 * 头部搜索
+	 */
+	@RequestMapping(value="search", method=RequestMethod.GET)
+	public String search(@RequestParam("shopId") String shopId, @RequestParam("q") String q, int pageNo, ModelMap model){
+		Page<im.gsj.index.vo.ProductVo> page =productService.search(shopId, q, pageNo);
+		model.addAttribute("page", page);
+		
+		//查出头部和尾部信息
+		model = indexService.getHeadAndFooter(shopId, model);
+		return "/product/searchResult";
 	}
 }

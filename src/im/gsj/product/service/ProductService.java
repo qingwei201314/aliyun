@@ -14,6 +14,7 @@ import im.gsj.index.service.IndexService;
 import im.gsj.product.vo.ProductVo;
 import im.gsj.uploadify.service.Uploadify;
 import im.gsj.util.Constant;
+import im.gsj.util.Page;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
@@ -188,5 +189,15 @@ public class ProductService {
 			image.setPath(image.getPath() + Constant.B);
 		}
 		return imageList;
+	}
+	
+	/**
+	 * 根据关键字查出一页产品记录
+	 */
+	@Transactional(readOnly=true)
+	public Page<im.gsj.index.vo.ProductVo> search(String shopId, String q, int pageNo){
+		Page<Product> originalPage = productDao.getNewProduct(shopId, pageNo);
+		Page<im.gsj.index.vo.ProductVo> page  =  indexService.getFirstProductImage(originalPage);
+		return page;
 	}
 }

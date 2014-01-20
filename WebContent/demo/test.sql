@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50614
 File Encoding         : 65001
 
-Date: 2014-01-19 23:26:33
+Date: 2014-01-20 13:55:26
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for about
+-- Table structure for `about`
 -- ----------------------------
 DROP TABLE IF EXISTS `about`;
 CREATE TABLE `about` (
@@ -32,7 +32,7 @@ CREATE TABLE `about` (
 INSERT INTO `about` VALUES ('40288185438536d601438537e0210000', '40288185436cd84901436cd93aeb0000', '<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 潮安县彩塘振能不锈钢制品厂座落于中国不锈钢制品之乡——彩塘，是粤东地区专业生产不锈钢日用及厨餐具制品和家用电器的企业。				企业始终秉承“开拓、实干、创新、诚信”的经营宗旨，坚持“市场为先导，人才为支撑，和谐为根本，服务为引擎”的企业发展理念。在ISO9001：2008国际质量管理体系和ISO14001：2004国际环境管理体系的多重监督下，研制开发近百个系列产品，多项荣获国家专利，电器产品已通过国家强制性CCC认证，拥有“振能”和“豪威”商标。产品以其齐全的规格、精湛的工艺、新颖的造型、优良的品质、合理的价格和完善的售后服务赢得广大消费者的信赖和赞誉，畅销海内外。				企业飞速发展依靠的是实施了出色的人才管理和创新战略，凝聚了一支擅长开发、营销和服务，具有强烈创新精神的队伍。先后荣获“广东省著名商标”、“广东省名牌产品”、				 “中国守合同重信用企业”等殊荣。 “振能人”用前瞻性的目光，汇入不锈钢制品行业的滚滚潮流……				 竭诚欢迎广大客户莅临指导，共铸“不锈”之辉煌．</p>');
 
 -- ----------------------------
--- Table structure for category
+-- Table structure for `category`
 -- ----------------------------
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
@@ -50,7 +50,7 @@ INSERT INTO `category` VALUES ('402881854376fb2c0143771739c20013', '类别2', '4
 INSERT INTO `category` VALUES ('402881854382abaf014382b0fb140000', '类别3', '40288185436cd84901436cd93aeb0000');
 
 -- ----------------------------
--- Table structure for city
+-- Table structure for `city`
 -- ----------------------------
 DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
@@ -3533,7 +3533,7 @@ INSERT INTO `city` VALUES ('3465', '石河子市', 'Shihezi Shi', '3464', '65900
 INSERT INTO `city` VALUES ('3466', '澳门特别行政区', 'aomen', null, '999999');
 
 -- ----------------------------
--- Table structure for image
+-- Table structure for `image`
 -- ----------------------------
 DROP TABLE IF EXISTS `image`;
 CREATE TABLE `image` (
@@ -3575,14 +3575,15 @@ INSERT INTO `image` VALUES ('40288185439ad57101439ad8ce58000c', '402881854376fb2
 INSERT INTO `image` VALUES ('40288185439ad57101439ad8eaa8000d', '402881854376fb2c01437714f343000a', '/1890/2467/883/2014/2014-1-16-19-39-3', '.jpg');
 
 -- ----------------------------
--- Table structure for map
+-- Table structure for `map`
 -- ----------------------------
 DROP TABLE IF EXISTS `map`;
 CREATE TABLE `map` (
-  `id` varchar(32) DEFAULT NULL,
+  `id` varchar(32) NOT NULL DEFAULT '',
   `shop_id` varchar(32) DEFAULT NULL,
   `longitude` float(12,6) DEFAULT NULL,
-  `latitude` float(12,6) DEFAULT NULL
+  `latitude` float(12,6) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -3591,7 +3592,7 @@ CREATE TABLE `map` (
 INSERT INTO `map` VALUES ('4028818543ab177b0143ab1b2aaf0002', '40288185436cd84901436cd93aeb0000', '116.673851', '23.518856');
 
 -- ----------------------------
--- Table structure for product
+-- Table structure for `product`
 -- ----------------------------
 DROP TABLE IF EXISTS `product`;
 CREATE TABLE `product` (
@@ -3617,7 +3618,7 @@ INSERT INTO `product` VALUES ('402881854382bdbc014382c5b9770000', 'dddddddddddd'
 INSERT INTO `product` VALUES ('402881854382bdbc014382ce8cd20004', '3333333333333', '<p>33333333333333333</p>', '40288185436cd84901436cd93aeb0000', '402881854382abaf014382b0fb140000', '2014-01-12 22:20:57');
 
 -- ----------------------------
--- Table structure for shop
+-- Table structure for `shop`
 -- ----------------------------
 DROP TABLE IF EXISTS `shop`;
 CREATE TABLE `shop` (
@@ -3639,7 +3640,7 @@ CREATE TABLE `shop` (
 INSERT INTO `shop` VALUES ('40288185436cd84901436cd93aeb0000', '4028818240b5fe8e0140b5ff11370000', '111', '111111', '111111111111', '东凤镇诗阳村深田新区一直巷1号', '2276', '/1890/2467/883/gate/2014-1-12-3-3-53_580x290.jpg', null);
 
 -- ----------------------------
--- Table structure for user
+-- Table structure for `user`
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
