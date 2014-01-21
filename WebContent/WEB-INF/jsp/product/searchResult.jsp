@@ -21,31 +21,46 @@
 					</p>
 				</div>
 			</c:forEach>
-			<c:if test="${page.list==null||page.list.size()<=0 }">
-			    <div class="span4">
-      <h2>Popovers</h2>
-      <p>Use popovers to provide subtextual information to a page without affecting layout.</p>
-      <p><a class="btn js-btn" href="./javascript.html#popover">Get the javascript &raquo;</a></p>
-    </div>
-    <div class="span12">
-      <div class="well popover-well">
-         <div class="popover-wrapper">
-          <div class="popover left">
-            <div class="arrow"></div>
-            <div class="inner">
-              <h3 class="title">Popover Title</h3>
-              <div class="content">
-                <p>Etiam porta sem malesuada magna mollis euismod. Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-              </div>
-            </div>
-          </div>
-          <img class="large-bird" src="assets/img/bird.png" >
-        </div>
-      </div>
-    </div>
-			</c:if>
 		</div>
 
+			<c:if test="${page.totalPage()>0 }">
+				<div class="pagination" style="padding-left: 296px;">
+					<ul>
+						<li class="prev disabled">
+						<a href="#">&larr; 上一页</a></li>
+						<li class="active"><a href="#">1</a></li>
+						<li><a href="#">2</a></li>
+						<li><a href="#">3</a></li>
+						<li><a href="#">4</a></li>
+						<li><a href="#">5</a></li>
+						<li class="next"><a href="#">下一页 &rarr;</a></li>
+					</ul>
+				</div>
+			</c:if>
+			
+			<c:if test="${page.list==null||page.list.size()<=0 }">
+			    <div class="span4">
+			      <h2>Popovers</h2>
+			      <p>Use popovers to provide subtextual information to a page without affecting layout.</p>
+			      <p><a class="btn js-btn" href="./javascript.html#popover">Get the javascript &raquo;</a></p>
+			    </div>
+			    <div class="span12">
+			      <div class="well popover-well">
+			         <div class="popover-wrapper">
+			          <div class="popover left">
+			            <div class="arrow"></div>
+			            <div class="inner">
+			              <h3 class="title">Popover Title</h3>
+			              <div class="content">
+			                <p>Etiam porta sem malesuada magna mollis euismod. Maecenas faucibus mollis interdum. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+			              </div>
+			            </div>
+			          </div>
+			          <img class="large-bird" src="assets/img/bird.png" >
+			        </div>
+			      </div>
+			    </div>
+			</c:if>
 		<%@ include file="/commonjsp/footer.jsp"%>
 	</div>
 </body>

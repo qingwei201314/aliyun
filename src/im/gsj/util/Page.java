@@ -7,6 +7,8 @@ public class Page<T> {
 	private long total;
 	private int pageSize = 12;
 	private int pageNo = 1;
+	private long totalPage;
+	private int displaySize = 5;
 	private List<T> list = new ArrayList<T>();
 
 	public Page(int pageNo, int pageSize, long total) {
@@ -53,5 +55,19 @@ public class Page<T> {
 
 	public void setList(List<T> list) {
 		this.list = list;
+	}
+
+	public long getTotalPage() {
+		if(total%pageSize == 0){
+			totalPage = total/pageSize;
+		}
+		else{
+			totalPage = total/pageSize +1;
+		}
+		return totalPage;
+	}
+
+	public void setTotalPage(long totalPage) {
+		this.totalPage = totalPage;
 	}
 }
