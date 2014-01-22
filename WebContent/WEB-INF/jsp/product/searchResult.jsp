@@ -23,9 +23,11 @@
 			</c:forEach>
 		</div>
 		<!-- 分页 -->
-		<form action="${util.path }/product/search.do">
+		<form id="pageForm" action="${util.path }/product/search.do">
+			<input type="hidden" name="shopId" value="${shopId }" />
+			<input type="hidden" name="q" value="${q }" />
 			<jsp:include page="/commonjsp/page.jsp">
-				<jsp:param value="pageForm" name="pageForm"/>
+				<jsp:param name="pageForm" value="pageForm" />
 			</jsp:include>
 		</form>
 

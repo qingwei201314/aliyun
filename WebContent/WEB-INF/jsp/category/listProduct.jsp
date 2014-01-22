@@ -17,7 +17,7 @@
 			<c:forEach var="productVo" items="${productVoList}">
 			<div class="span-one-third">
 				<h4>${productVo.name}</h4>
-				<p><a href="viewCanteen.html"><img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" /></a></p>
+				<p><a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1"><img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" /></a></p>
 			</div>
 			</c:forEach>
 		</div>
@@ -32,7 +32,7 @@
     		<c:forEach var="imageVo" items="${imageDtoList}">
 	    		<dd>
 		    		<h4>${imageVo.name}</h4>
-			    	<img class="product_detail" src="${util.path }${util.repository }${imageVo.path }${imageVo.postfix }">
+			    	<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.path }${util.repository }${imageVo.path }${imageVo.postfix }">
 		    	</dd>
 	    	</c:forEach>
     	</div>
@@ -47,6 +47,14 @@
 	
 <script type="text/javascript">
 	$("#${categoryId}").attr("class", "active");
+
+	//点击图片时，弹出图片查看窗口
+	function showImage(imageSrc,productName){
+		$("body").addClass("backgroud_gray");
+		var viewImagePath = "${util.path}/product/viewImage.do?imageSrc=" + imageSrc + "&productName="+productName;
+		window.showModalDialog(viewImagePath,"", "dialogWidth:820px;dialogHeight:620px;status:no;");
+		$("body").removeClass("backgroud_gray");
+	}
 	
 	//加载更多页面
     $(document).ready(function() {

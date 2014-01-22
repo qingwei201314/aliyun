@@ -62,6 +62,8 @@ public class ProductViewController {
 	public String search(@RequestParam("shopId") String shopId, @RequestParam("q") String q, int pageNo, ModelMap model){
 		Page<im.gsj.index.vo.ProductVo> page =productService.search(shopId, q, pageNo);
 		model.addAttribute("page", page);
+		model.addAttribute("shopId", shopId);
+		model.addAttribute("q", q);
 		
 		//查出头部和尾部信息
 		model = indexService.getHeadAndFooter(shopId, model);
