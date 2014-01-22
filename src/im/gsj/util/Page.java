@@ -7,9 +7,13 @@ public class Page<T> {
 	private long total;
 	private int pageSize = 12;
 	private int pageNo = 1;
-	private long totalPage;
-	private int displaySize = 5;
 	private List<T> list = new ArrayList<T>();
+	
+	private long totalPage;
+	//控制显示在页面上可以点的页面数
+	private int displaySize = 5; 
+	//在页面上显示的页数集合
+	private List<Long> displayPage;
 
 	public Page(int pageNo, int pageSize, long total) {
 		this.pageNo = pageNo;
@@ -69,5 +73,49 @@ public class Page<T> {
 
 	public void setTotalPage(long totalPage) {
 		this.totalPage = totalPage;
+	}
+	
+	public int getDisplaySize() {
+		return displaySize;
+	}
+
+	public void setDisplaySize(int displaySize) {
+		this.displaySize = displaySize;
+	}
+	
+	/**
+	 * 取得显示在页面上的页码集
+	 */
+	public List<Long> getDisplayPage() {
+		displayPage = new ArrayList<Long>();
+		int middle =  displaySize/2 +1;
+		if(getTotalPage() <= displaySize){
+			//按照总页面进行
+			for(long i=1; i<= totalPage; i++ )
+				displayPage.add(i);
+		}
+		else{
+			if(pageNo <= middle){
+				//取出前displaySize页码
+				for(long i=1; i<= displaySize; i++)
+					displayPage.add(i);
+			}
+			else{
+				if(totalPage-pageNo >= displaySize - middle){
+					//当前页面在中间
+					int start = pageNo - displaySize/2; //开始位置
+					int end = pageNo + displaySize/2; //结束位置
+					for(long i=start; i <= end; i++)
+						displayPage.add(i);
+				}
+				else{
+					//当前页面在右边，取出最后的页码
+					long start = totalPage - displaySize +1;
+					for(long i= start; i <= totalPage; i++)
+						displayPage.add(i);
+				}
+			}
+		}
+		return displayPage;
 	}
 }
