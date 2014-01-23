@@ -3,6 +3,8 @@ package im.gsj.category.controller;
 import im.gsj.category.service.CategoryService;
 import im.gsj.dao.CategoryDao;
 import im.gsj.entity.Category;
+import im.gsj.entity.Shop;
+import im.gsj.shop.service.ShopService;
 import im.gsj.util.Constant;
 
 import java.io.UnsupportedEncodingException;
@@ -25,6 +27,8 @@ public class CategoryController {
 	private CategoryService categoryService;
 	@Resource
 	private CategoryDao categoryDao;
+	@Resource
+	private ShopService shopService;
 
 	@RequestMapping(value="saveCategory.do", method=RequestMethod.POST)
 	public String saveCategory(@ModelAttribute("category") Category category,HttpServletRequest request,  ModelMap model) throws UnsupportedEncodingException{
@@ -58,6 +62,10 @@ public class CategoryController {
 		//查出当前商店的分类
 		List<Category> categoryList = categoryService.list(phone);
 		model.addAttribute("categoryList", categoryList);
+		
+		//使头部能显示
+		Shop shop = shopService.getShopByPhone(phone);
+		model.addAttribute("shop", shop);
 		return "/admin/category/addCategory";
 	}
 }

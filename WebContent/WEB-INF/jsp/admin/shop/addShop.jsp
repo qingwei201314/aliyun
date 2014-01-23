@@ -115,6 +115,10 @@
 		        	$("#gatePhone").show();
 		        	$("#gatePhone").attr("src", path); 
 		        	$("#gate_url").val(data);
+					//如果有验证信息，将其去掉
+		    		if($("#gate_url").next().hasClass("LV_validation_message LV_invalid")){
+		    			$("#gate_url").next().remove();
+		    		}
 		          },
 		         'buttonClass' : 'btn info'
 		      });

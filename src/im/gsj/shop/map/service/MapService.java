@@ -24,7 +24,7 @@ public class MapService {
 	private CityService cityService;
 	
 	@Transactional(readOnly=true)
-	public void addAxis(String phone, ModelMap model) throws IOException{
+	public ModelMap addAxis(String phone, ModelMap model) throws IOException{
 		Shop shop = shopDao.getByPhone(phone);
 		Map map = mapDao.query("shop_id", shop.getId());
 		if(map != null){
@@ -37,6 +37,10 @@ public class MapService {
 			String address = provinceTownCity + shop.getAddress();
 			model.addAttribute("address", address);
 		}
+		
+		//使头部能显示
+		model.addAttribute("shop", shop);
+		return model;
 	}
 	
 	@Transactional
@@ -48,5 +52,8 @@ public class MapService {
 		String provinceTownCity = cityService.getByShopDistrict(cityId);
 		String address = provinceTownCity + shop.getAddress();
 		model.addAttribute("address", address);
+		
+		//使头部能显示
+		model.addAttribute("shop", shop);
 	}
 }

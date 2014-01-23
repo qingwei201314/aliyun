@@ -53,6 +53,7 @@ public class ShopController {
 		//查出当前商店的分类
 		List<Category> categoryList = categoryService.list(phone);
 		model.addAttribute("categoryList", categoryList);
+		
 		return "/admin/category/addCategory";
 	}
 	

@@ -893,8 +893,17 @@ function notEnpty(field){
 	var field = "#" + field;
 	if ($(field).val() == null||$(field).val() =='') {
 		$(field).addClass("LV_invalid_field");
-		$(field).after("<span class='LV_validation_message LV_invalid'>不能为空!</span>");
+		if(!($(field).next().hasClass("LV_validation_message LV_invalid"))){
+			$(field).after("<span class='LV_validation_message LV_invalid'>不能为空!</span>");
+		}
 		return false;
+	}
+	//如果不为空时，后面有提示信息的，要将其去掉
+	else{
+		$(field).removeClass("LV_invalid_field");
+		if($(field).next().hasClass("LV_validation_message LV_invalid")){
+			$(field).next().remove();
+		}
 	}
 	return true;
 }

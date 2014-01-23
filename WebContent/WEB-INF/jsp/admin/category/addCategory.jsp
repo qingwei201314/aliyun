@@ -35,7 +35,7 @@
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">类别名称</label>
 					<div class="div_margin">
-						<input type="text" name="name" size="30" class="xlarge" />
+						<input type="text" name="name" size="30" maxlength="" class="xlarge" />
 					</div>
 					<div class="actions" style="padding-left: 360px;">
 						<input type="submit" class="btn primary" value="保存"/>

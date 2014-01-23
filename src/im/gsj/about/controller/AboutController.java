@@ -2,9 +2,13 @@ package im.gsj.about.controller;
 
 import im.gsj.about.service.AboutService;
 import im.gsj.entity.About;
+import im.gsj.entity.Shop;
+import im.gsj.shop.service.ShopService;
 import im.gsj.util.Constant;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class AboutController {
 	@Resource
 	private AboutService aboutService;
-
+	@Resource
+	private ShopService shopService;
+	
 	@RequestMapping(value = "addAbout.do", method = RequestMethod.GET)
 	public String addAbout(HttpSession session, ModelMap model) {
 		String toView = "/admin/about/addAbout";
@@ -26,6 +32,10 @@ public class AboutController {
 			model.addAttribute("about", about);
 			toView = "/admin/about/viewAbout";
 		}
+		
+		//使头部能显示
+		Shop shop = shopService.getShopByPhone(phone);
+		model.addAttribute("shop", shop);
 		return toView;
 	}
 
@@ -35,6 +45,10 @@ public class AboutController {
 		String phone = (String) session.getAttribute(Constant.phone);
 		about = aboutService.saveAbout(about, phone);
 		model.addAttribute("about", about);
+		
+		//使头部能显示
+		Shop shop = shopService.getShopByPhone(phone);
+		model.addAttribute("shop", shop);
 		return "/admin/about/viewAbout";
 	}
 
@@ -43,6 +57,10 @@ public class AboutController {
 		String phone = (String) session.getAttribute(Constant.phone);
 		About about = aboutService.getByPhone(phone);
 		model.addAttribute("about", about);
+		
+		//使头部能显示
+		Shop shop = shopService.getShopByPhone(phone);
+		model.addAttribute("shop", shop);
 		return "/admin/about/addAbout";
 	}
 }

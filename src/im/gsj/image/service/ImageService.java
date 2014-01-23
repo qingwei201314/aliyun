@@ -6,6 +6,8 @@ import im.gsj.dao.ProductDao;
 import im.gsj.entity.Category;
 import im.gsj.entity.Image;
 import im.gsj.entity.Product;
+import im.gsj.entity.Shop;
+import im.gsj.shop.service.ShopService;
 import im.gsj.util.Constant;
 
 import java.util.List;
@@ -24,6 +26,8 @@ public class ImageService {
 	private CategoryService categoryService;
 	@Resource
 	private ProductDao productDao;
+	@Resource
+	private ShopService shopService;
 	
 	/**
 	 * 保存图片的数据库记录
@@ -50,6 +54,10 @@ public class ImageService {
 			List<Product> productList =  productDao.queryList("category_id", category.getId());
 			model.addAttribute("productList", productList);
 		}
+		
+		//使头部能显示
+		Shop shop = shopService.getShopByPhone(phone);
+		model.addAttribute("shop", shop);
 		return model;
 	}
 }

@@ -31,7 +31,7 @@ public class MapController {
 	@RequestMapping(value="addAxis.do", method=RequestMethod.GET)
 	public String addAxis(HttpSession session, ModelMap model) throws IOException{
 		String phone = (String)session.getAttribute(Constant.phone);
-		mapService.addAxis(phone,model);
+		model = mapService.addAxis(phone,model);
 		return "/admin/shop/map/addAxis";
 	}
 	

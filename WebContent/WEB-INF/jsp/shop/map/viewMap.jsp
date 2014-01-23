@@ -6,7 +6,7 @@
 <%@ include file="/commonjsp/head.jsp"%>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Hello, World</title>
+<title>地图位置</title>
 <style type="text/css">
 html {
 	height: 100%

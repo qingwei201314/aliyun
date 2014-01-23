@@ -4,8 +4,10 @@ import im.gsj.category.service.CategoryService;
 import im.gsj.dao.ProductDao;
 import im.gsj.entity.Category;
 import im.gsj.entity.Product;
+import im.gsj.entity.Shop;
 import im.gsj.product.service.ProductService;
 import im.gsj.product.vo.ProductVo;
+import im.gsj.shop.service.ShopService;
 import im.gsj.util.Constant;
 import im.gsj.util.Util;
 
@@ -34,6 +36,8 @@ public class ProductController {
 	private ProductDao productDao;
 	@Resource
 	private CategoryService categoryService;
+	@Resource
+	private ShopService shopService;
 
 	/**
 	 * 跳转到增加产品页面
@@ -45,6 +49,10 @@ public class ProductController {
 		List<Category> categoryList = categoryService.list(phone);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryId", categoryId);
+		
+		//使头部能显示
+		Shop shop = shopService.getShopByPhone(phone);
+		model.addAttribute("shop", shop);
 		return "/admin/product/addProduct";
 	}
 	
@@ -58,6 +66,9 @@ public class ProductController {
 		ProductVo productVo = productService.get(product.getId());
 		model.addAttribute("productVo", productVo);
 		
+		//使头部能显示
+		Shop shop = shopService.getShopByPhone(phone);
+		model.addAttribute("shop", shop);
 		return "/admin/product/addProductImage";
 	}
 	
