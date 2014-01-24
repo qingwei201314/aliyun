@@ -9,7 +9,9 @@
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
+		<%@ include file="/commonjsp/validateMessage.jsp"%>
 		<form action="${util.path}/admin/category/saveCategory.do" method="post">
+			<input type="hidden" name="id" value="${category.id }" />
 			<fieldset>
 				<div style="width: 500px;margin:0 auto;">
 					<table class="bordered-table zebra-striped" id="sortTableExample">
@@ -24,6 +26,7 @@
 							<tr>
 								<td>${category.name}</td>
 								<td>
+									<a href="${util.path}/admin/category/editCategory.do?categoryId=${category.id}">修改</a>
 									<a href="${util.path}/admin/category/deleteCategory.do?deleteCategoryId=${category.id}">删除</a>
 									<a href="${util.path}/admin/product/toProduct.do?categoryId=${category.id}">添加产品</a>
 								</td>
@@ -35,7 +38,7 @@
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">类别名称</label>
 					<div class="div_margin">
-						<input type="text" name="name" size="30" maxlength="" class="xlarge" />
+						<input type="text" name="name" value="${category.name }" size="30" maxlength="5" class="xlarge" />
 					</div>
 					<div class="actions" style="padding-left: 360px;">
 						<input type="submit" class="btn primary" value="保存"/>
@@ -46,6 +49,9 @@
 	</div>	
 	<script type="text/javascript">
 		$("#category").attr("class","active");
+
+		//验证信息
+		new LiveValidation('name').add(Validate.Presence);
 	</script>
 </body>
 </html>

@@ -128,3 +128,13 @@
 .table_width_93 tbody > tr > td{
 	width: 15px;
 }
+
+.product-image-table tbody > tr > td {
+	width:100px;
+	font-weight: bold;
+}
+
+.product-image-table tbody > tr > td.content{
+	width: 400px;
+	font-weight: lighter;
+}

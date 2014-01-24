@@ -6,6 +6,7 @@ import im.gsj.dao.ProductDao;
 import im.gsj.entity.Product;
 import im.gsj.image.service.ImageService;
 import im.gsj.util.Constant;
+import im.gsj.util.controller.CommonController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin/image")
-public class ImageController {
+public class ImageController extends CommonController{
 	@Resource
 	private ImageService imageService;
 	@Resource

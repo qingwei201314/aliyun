@@ -6,6 +6,7 @@ import im.gsj.entity.Shop;
 import im.gsj.shop.service.ShopService;
 import im.gsj.uploadify.service.Uploadify;
 import im.gsj.util.Constant;
+import im.gsj.util.controller.CommonController;
 
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/admin/shop")
-public class ShopController {
+public class ShopController extends CommonController{
 	@Resource
 	private ShopService shopService;
 	@Resource

@@ -18,6 +18,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,10 +47,28 @@ public class CategoryService {
 		return categoryList;
 	}
 	
-	public void save(Category category, String phone) {
+	@Transactional
+	public boolean save(Category category, String phone) {
+		boolean success = true;
 		Shop shop =shopDao.getByPhone(phone);
-		category.setShop_id(shop.getId());
-		categoryDao.save(category);
+	
+		Long categoryCount = categoryDao.getCategoryCount(shop.getId());
+		if(categoryCount >=5){
+			//如果类别数大于5
+			success = false;
+		}
+		else{
+			//保存类别
+			
+			category.setShop_id(shop.getId());
+			if(StringUtils.isEmpty(category.getId())){
+				categoryDao.save(category);
+			}
+			else{
+				categoryDao.update(category);
+			}
+		}
+		return success;
 	}
 	
 	/**
@@ -98,6 +117,24 @@ public class CategoryService {
 		for(ImageDto imageDto: imageDtoList)
 			imageDto.setPath(imageDto.getPath() + Constant.S);
 		model.addAttribute("imageDtoList", imageDtoList);
+		return model;
+	}
+	
+	/**
+	 * 查出某一商店的所有类别，并将当前类别取出
+	 */
+	@Transactional(readOnly=true)
+	public ModelMap editCategory(String phone, String categoryId, ModelMap model) {
+		Shop shop =shopDao.getByPhone(phone);
+		List<Category> categoryList = categoryDao.getByShopExceptCurrent(shop.getId(), categoryId);
+		model.addAttribute("categoryList", categoryList);
+		
+		//当前的选中项
+		Category category = categoryDao.get(categoryId);
+		model.addAttribute("category", category);
+		
+		//使头部能显示
+		model.addAttribute("shop", shop);
 		return model;
 	}
 }

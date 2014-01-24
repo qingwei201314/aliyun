@@ -6,6 +6,7 @@ import im.gsj.entity.Map;
 import im.gsj.entity.Shop;
 import im.gsj.shop.map.service.MapService;
 import im.gsj.util.Constant;
+import im.gsj.util.controller.CommonController;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin/shop/map")
-public class MapController {
+public class MapController extends CommonController{
 	@Resource
 	private MapDao mapDao;
 	@Resource

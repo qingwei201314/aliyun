@@ -4,7 +4,7 @@
 <div class="topbar">
 	<div class="fill">
 		<div class="container">
-			<ul class="nav">
+			<ul class="nav" style="width: 100%">
 				<li id="shop"><a href="${util.path}/admin/shop/addShop.do">商店信息</a></li>
 				<c:if test="${shop!=null }">
 					<li class="arrow_img"></li>
@@ -19,6 +19,7 @@
 					<li id="about"><a href="${util.path}/admin/about/addAbout.do">关于我们</a></li>
 					<li class="arrow_img"></li>
 					<li id="map"><a href="${util.path}/admin/shop/map/addAxis.do">地图定位</a></li>
+					<li id="map" style="float: right;"><a href="${util.path}/user/logout.do">退出登录</a></li>
 				</c:if>
 			</ul>
 		</div>

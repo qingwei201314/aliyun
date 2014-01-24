@@ -31,7 +31,7 @@
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">名称</label>
 					<div class="div_margin">
-						<input type="text" name="name" value="${product.name}" size="30" class="xlarge" />
+						<input type="text" name="name" value="${product.name}" size="30" maxlength="12" class="xlarge" />
 					</div>
 				</div>
 				<div class="clearfix">
@@ -49,10 +49,13 @@
 				<input type="submit" class="btn primary" value="保存" />
 			</div>
 		</form>
-	</div>	
+	</div>
 	<script type="text/javascript">
 		$("#product").attr("class","active");
 		UE.getEditor('myEditor');
+
+		//验证信息
+		new LiveValidation('name').add(Validate.Presence);
 	</script>
 </body>
 </html>

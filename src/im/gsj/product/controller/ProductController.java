@@ -2,6 +2,7 @@ package im.gsj.product.controller;
 
 import im.gsj.category.service.CategoryService;
 import im.gsj.dao.ProductDao;
+import im.gsj.dao.ShopDao;
 import im.gsj.entity.Category;
 import im.gsj.entity.Product;
 import im.gsj.entity.Shop;
@@ -10,6 +11,7 @@ import im.gsj.product.vo.ProductVo;
 import im.gsj.shop.service.ShopService;
 import im.gsj.util.Constant;
 import im.gsj.util.Util;
+import im.gsj.util.controller.CommonController;
 
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
@@ -29,7 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/admin/product")
-public class ProductController {
+public class ProductController extends CommonController{
 	@Resource
 	private ProductService productService;
 	@Resource
@@ -38,6 +40,8 @@ public class ProductController {
 	private CategoryService categoryService;
 	@Resource
 	private ShopService shopService;
+	@Resource
+	private ShopDao shopDao;
 
 	/**
 	 * 跳转到增加产品页面
@@ -76,6 +80,10 @@ public class ProductController {
 	public String addProductImage(@RequestParam("productId") String productId, ModelMap model) throws IllegalAccessException, InvocationTargetException{
 		ProductVo productVo = productService.get(productId);
 		model.addAttribute("productVo", productVo);
+		
+		//使头部能显示
+		Shop shop = shopDao.get(productVo.getShop_id());
+		model.addAttribute("shop", shop);
 		return "/admin/product/addProductImage";
 	}
 

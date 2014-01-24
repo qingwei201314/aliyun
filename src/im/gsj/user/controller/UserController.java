@@ -51,4 +51,12 @@ public class UserController {
 		return resultPath;
 	}
 
+	/**
+	 * 退出登录
+	 */
+	@RequestMapping(value="logout.do", method=RequestMethod.GET)
+	public String logout(HttpSession session){
+		session.removeAttribute(Constant.phone);
+		return "/user/login";
+	}
 }

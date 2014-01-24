@@ -8,15 +8,22 @@
 	<title>首页</title>
 </head>
 <body>
+<form id="searchForm" action="${util.path }/index/search.do" method="get">
+	<input type="hidden" name="pageNo" value="1" />
 	<div class="logo_div">
 		<a href="${util.path}/user/login.do"><img src="${util.path}/img/logo.png" style="border:0;" /></a>
 	</div>
 	<div>
 		<div class="search_div">
-			<input type="text" class="search_div_input" /> <input type="button"
-				class="search_div_button"
-				onclick="window.location='shop/shopIndex.html'" />
+			<input type="text" name="q" class="search_div_input" />
+			<input type="button" onclick="searchSubmit();" class="search_div_button" />
 		</div>
 	</div>
+</form>
+<script type="text/javascript">
+	function searchSubmit(){
+		document.getElementById("searchForm").submit();
+	}
+</script>
 </body>
 </html>

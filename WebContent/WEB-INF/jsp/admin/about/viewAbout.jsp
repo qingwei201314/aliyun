@@ -11,8 +11,8 @@
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
 		<form action="${util.path}/admin/about/editAbout.do" method="get">
-			<div class="hero-unit">
-				<p style="margin-top: 10px;">${about.content}</p>
+			<div class="hero-unit" style="" >
+				<pre style="margin-top: 10px;border: none;">${about.content}</pre>
 			</div>
 
 			<div class="actions" style="padding-left: 360px;">

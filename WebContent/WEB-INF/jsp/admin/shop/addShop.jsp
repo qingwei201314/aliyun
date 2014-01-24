@@ -16,14 +16,14 @@
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">名称</label>
 					<div class="div_margin">
-						<input type="text" id="name" name="name" value="${shop.name}" size="30" maxlength="32" class="xlarge" />
+						<input type="text" id="name" name="name" value="${shop.name}" size="30" maxlength="26" class="xlarge" />
 					</div>
 				</div>
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">简称</label>
 					<div class="div_margin">
 						<input type="text" id="shortName" name="shortName" size="30" value="${shop.shortName}"
-							maxlength="16" class="xlarge" />
+							maxlength="5" class="xlarge" />
 					</div>
 				</div>
 				<div class="clearfix">
@@ -57,7 +57,7 @@
 					</div>
 					<div class="div_margin ">
 						<input type="text" id="address" name="address" size="30" value="${shop.address}"
-							maxlength="64" class="xlarge"
+							maxlength="26" class="xlarge"
 							style="width: 440px; margin-top: 5px;" />
 					</div>
 				</div>
@@ -80,11 +80,6 @@
 	</div>
 	<script type="text/javascript">
 		$("#shop").attr("class", "active");
-		//验证信息
-		new LiveValidation('name').add(Validate.Presence);
-		new LiveValidation('shortName').add(Validate.Presence);
-		new LiveValidation('contact').add(Validate.Presence);
-		new LiveValidation('address').add(Validate.Presence);
 
 		//根据区划id查找子类，并加载到子下拉框中
 		function getCity(cityId, renderItem){
@@ -124,6 +119,12 @@
 		      });
 		});
 
+		//验证信息
+		new LiveValidation('name').add(Validate.Presence);
+		new LiveValidation('shortName').add(Validate.Presence);
+		new LiveValidation('contact').add(Validate.Presence);
+		new LiveValidation('address').add(Validate.Presence);
+		
 	    //提交前对字段进行非空验证
 		function beforeSubmit() {
 			var city=  notEnpty('city');

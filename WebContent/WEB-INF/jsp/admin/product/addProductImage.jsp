@@ -17,15 +17,15 @@
 			<input type="hidden" name="categoryId" value="${productVo.category_id}" />
 			<fieldset>
 			<div style="width: 500px;margin:0 auto;">
-				<table class="bordered-table zebra-striped table_width_93">
+				<table class="bordered-table zebra-striped table_width_93 product-image-table" style="width: 100%;">
 					<tbody>
 						<tr>
 							<td>类别</td>
-							<td>${productVo.categoryName}</td>
+							<td class="content">${productVo.categoryName}</td>
 						</tr>
 						<tr>
 							<td>名称</td>
-							<td>${productVo.name}</td>
+							<td class="content">${productVo.name}</td>
 						</tr>
 					</tbody>
 				</table>
@@ -34,10 +34,10 @@
 				<table class="bordered-table zebra-striped table_width_93">
 					<tbody>
 						<tr>
-							<td>描述：</td>
+							<td style="width: 100%">描述：</td>
 						</tr>
 						<tr>
-							<td>
+							<td style="width: 100%">
 								${productVo.description}
 							</td>
 						</tr>

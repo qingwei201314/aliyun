@@ -5,6 +5,7 @@ import im.gsj.entity.About;
 import im.gsj.entity.Shop;
 import im.gsj.shop.service.ShopService;
 import im.gsj.util.Constant;
+import im.gsj.util.controller.CommonController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/admin/about")
-public class AboutController {
+public class AboutController extends CommonController{
 	@Resource
 	private AboutService aboutService;
 	@Resource

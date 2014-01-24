@@ -12,6 +12,7 @@ import im.gsj.entity.Shop;
 import im.gsj.image.service.ImageService;
 import im.gsj.index.service.IndexService;
 import im.gsj.product.vo.ProductVo;
+import im.gsj.shop.service.ShopService;
 import im.gsj.uploadify.service.Uploadify;
 import im.gsj.util.Constant;
 import im.gsj.util.Page;
@@ -48,6 +49,8 @@ public class ProductService {
 	private ImageService imageService;
 	@Resource
 	private IndexService indexService;
+	@Resource
+	private ShopService shopService;
 
 	public void save(Product product, String phone) {
 		Shop shop = shopDao.getByPhone(phone);
@@ -87,6 +90,10 @@ public class ProductService {
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryId", product.getCategory_id());
 		model.addAttribute("product", product);
+		
+		//使头部能显示
+		Shop shop = shopDao.get(product.getShop_id());
+		model.addAttribute("shop", shop);
 		return model;
 	}
 
@@ -145,6 +152,11 @@ public class ProductService {
 		
 		List<Product> productList =  productDao.queryList("category_id", categoryId);
 		model.addAttribute("productList", productList);
+		
+		//使头部能显示
+		//使头部能显示
+		Shop shop = shopService.getShopByPhone(phone);
+		model.addAttribute("shop", shop);
 
 		return null;
 	}
@@ -197,6 +209,16 @@ public class ProductService {
 	@Transactional(readOnly=true)
 	public Page<im.gsj.index.vo.ProductVo> search(String shopId, String q, int pageNo){
 		Page<Product> originalPage = productDao.searchProduct(shopId, q, pageNo);
+		Page<im.gsj.index.vo.ProductVo> page  =  indexService.getFirstProductImage(originalPage);
+		return page;
+	}
+	
+	/**
+	 * 根据关键字查出一页产品记录
+	 */
+	@Transactional(readOnly=true)
+	public Page<im.gsj.index.vo.ProductVo> indexSearch(String q, int pageNo){
+		Page<Product> originalPage = productDao.searchProduct(q, pageNo);
 		Page<im.gsj.index.vo.ProductVo> page  =  indexService.getFirstProductImage(originalPage);
 		return page;
 	}
