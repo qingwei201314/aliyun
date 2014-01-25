@@ -12,6 +12,7 @@ public class ProductVo {
 	private String category_id;
 	private String categoryName;
 	private List<Image> imageList;
+	private long totalPage;
 	
 	public String getId() {
 		return id;
@@ -54,5 +55,11 @@ public class ProductVo {
 	}
 	public void setImageList(List<Image> imageList) {
 		this.imageList = imageList;
+	}
+	public long getTotalPage() {
+		return totalPage;
+	}
+	public void setTotalPage(long totalPage) {
+		this.totalPage = totalPage;
 	}
 }

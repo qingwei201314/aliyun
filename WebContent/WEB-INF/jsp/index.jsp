@@ -8,6 +8,10 @@
 	<title>首页</title>
 </head>
 <body>
+<div style="width: 100%;text-align: right;font-size: 10pt;">
+	<a href="${util.path }/user/login.do">登录</a>
+	<a href="#">注册</a>
+</div>
 <form id="searchForm" action="${util.path }/index/search.do" method="get">
 	<input type="hidden" name="pageNo" value="1" />
 	<div class="logo_div">

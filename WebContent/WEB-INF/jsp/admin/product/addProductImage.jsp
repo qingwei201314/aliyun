@@ -7,7 +7,7 @@
 <link href="${util.path}/css/shop/shop.css" rel="stylesheet" />
 <link href="${util.path}/uploadify/uploadify.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="${util.path}/uploadify/jquery.uploadify.min.js"></script>
-<title>用户登录</title>
+<title>添加图片</title>
 </head>
 <body style="padding-top: 60px;">
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>

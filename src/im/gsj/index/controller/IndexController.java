@@ -6,7 +6,6 @@ import im.gsj.util.Page;
 import im.gsj.util.Util;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -38,7 +37,7 @@ public class IndexController {
 	 */
 	@RequestMapping(value="search", method=RequestMethod.GET)
 	public String search(@RequestParam("q") String q, int pageNo, ModelMap model){
-		String viewResult = "/searchResult";
+		String viewResult = "/shop/indexSearchResult";
 		//如果是手机号，直接跳转到商店首页
 		if(q !=null &&q.matches("^(0|1)\\d{10,19}$")){
 			viewResult = "redirect:" + Util.path() + "/" + q;

@@ -12,9 +12,9 @@
 	
 	<div class="container">
 		<div class="hero-unit">
-			<p style="margin-top: 10px;">
+			<pre style="margin-top: 10px;border: none;">
 				${about.content}
-			</p>
+			</pre>
 		</div>
 		<%@ include file="/commonjsp/footer.jsp"%>
 	</div>

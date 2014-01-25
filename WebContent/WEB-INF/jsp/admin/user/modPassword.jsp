@@ -5,50 +5,52 @@
 <head>
 <%@ include file="/commonjsp/head.jsp"%>
 <script type="text/javascript" src="${util.path}/js/md5.js"></script>
-<title>用户登录</title>
+<title>修改密码</title>
 </head>
 <body>
 <body style="padding-top: 60px;">
-	<div class="topbar">
-		<div class="fill">
-			<div class="container">
-				<ul class="nav">
-					<li class="active"><a href="#">用户登录</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
 		<%@ include file="/commonjsp/validateMessage.jsp"%>
-		<form id="myform" method="post"  onsubmit="passwordMd5();"
-			action="${util.path}/user/loginValidate.do">
+		<form id="myform" method="post" onsubmit="passwordMd5();"
+			action="${util.path}/admin/shop/updatePassword.do">
 			<fieldset>
 				<div class="clearfix">
-					<label for="xlInput" style="width: 340px;">电话</label>
+					<label for="xlInput" style="width: 340px;">原密码</label>
 					<div class="input" style="margin-left: 360px;">
-						<input type="text" id="phone" name="phone" size="30"
+						<input type="password" id="password" name="password" size="30"
 							maxlength="15" class="xlarge" />
 					</div>
 				</div>
 				<div class="clearfix">
-					<label for="xlInput" style="width: 340px;">密码</label>
+					<label for="xlInput" style="width: 340px;">新密码</label>
 					<div class="input" style="margin-left: 360px;">
-						<input type="password" name="password" id="password" size="30"
+						<input type="password" name="newpassword" id="newpassword" size="30"
+							maxlength="32" class="xlarge" />
+					</div>
+				</div>
+				<div class="clearfix">
+					<label for="xlInput" style="width: 340px;">确认新密码</label>
+					<div class="input" style="margin-left: 360px;">
+						<input type="password" name="repassword" id="repassword" size="30"
 							maxlength="32" class="xlarge" />
 					</div>
 				</div>
 				<div class="actions" style="padding-left: 360px;">
-					<input type="submit" class="btn primary" value="登录" />
+					<input type="submit" class="btn primary" value="保存" />
 				</div>
 			</fieldset>
 		</form>
 	</div>
 	<script type="text/javascript">
-		new LiveValidation('phone').add(Validate.Presence);
 		new LiveValidation('password').add(Validate.Presence);
+		new LiveValidation('newpassword').add(Validate.Presence);
+		new LiveValidation('repassword').add(Validate.Presence);
 
 		function passwordMd5(){
 			$("#password").val(hex_md5($("#password").val()));
+			$("#newpassword").val(hex_md5($("#newpassword").val()));
+			$("#repassword").val(hex_md5($("#repassword").val()));
 		}
 	</script>
 </body>

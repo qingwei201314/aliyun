@@ -5,23 +5,23 @@
 <head>
 <%@ include file="/commonjsp/head.jsp"%>
 <script type="text/javascript" src="${util.path}/js/md5.js"></script>
-<title>用户登录</title>
+<title>新增用户</title>
 </head>
-<body>
 <body style="padding-top: 60px;">
 	<div class="topbar">
 		<div class="fill">
 			<div class="container">
 				<ul class="nav">
-					<li class="active"><a href="#">用户登录</a></li>
+					<li class="active"><a href="#">新增用户</a></li>
 				</ul>
 			</div>
 		</div>
 	</div>
 	<div class="container">
 		<%@ include file="/commonjsp/validateMessage.jsp"%>
-		<form id="myform" method="post"  onsubmit="passwordMd5();"
-			action="${util.path}/user/loginValidate.do">
+		<form id="myform" method="post"
+			action="${util.path}/admin/shop/addUser.do" onsubmit="md5password();">
+			<input type="hidden" name="password" id = "password" />
 			<fieldset>
 				<div class="clearfix">
 					<label for="xlInput" style="width: 340px;">电话</label>
@@ -33,12 +33,12 @@
 				<div class="clearfix">
 					<label for="xlInput" style="width: 340px;">密码</label>
 					<div class="input" style="margin-left: 360px;">
-						<input type="password" name="password" id="password" size="30"
+						<input type="password" name="customPw" id="customPw" size="30"
 							maxlength="32" class="xlarge" />
 					</div>
 				</div>
 				<div class="actions" style="padding-left: 360px;">
-					<input type="submit" class="btn primary" value="登录" />
+					<input type="submit" class="btn primary" value="保存" />
 				</div>
 			</fieldset>
 		</form>
@@ -47,8 +47,9 @@
 		new LiveValidation('phone').add(Validate.Presence);
 		new LiveValidation('password').add(Validate.Presence);
 
-		function passwordMd5(){
-			$("#password").val(hex_md5($("#password").val()));
+		function md5password(){
+			var passwordMd5 = hex_md5($("#customPw").val());
+			$("#password").val(passwordMd5);
 		}
 	</script>
 </body>

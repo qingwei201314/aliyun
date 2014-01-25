@@ -38,7 +38,8 @@
 	//跳转到第n页面
 	function gotoPage(pageForm, pageNo){
 		var pageForm = "#" + pageForm;
-		var pageNoHidden = "<input type='hidden' name='pageNo' value='" + pageNo + "' />" ;
+		var pageNoHidden = "<input type='hidden' id='pageNo' name='pageNo' value='" + pageNo + "' />" ;
+		$("#pageNo").remove();
 		$(pageForm).append(pageNoHidden);
 		$(pageForm).submit();
 	}

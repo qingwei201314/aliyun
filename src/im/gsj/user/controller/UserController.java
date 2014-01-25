@@ -41,10 +41,17 @@ public class UserController {
 		String resultPath = "/user/login";
 		boolean pass = userService.login(user);
 		if (pass) {
-			resultPath = "/admin/shop/addShop";
 			session.setAttribute(Constant.phone, user.getPhone());
-			//查出商店信息
-			model = shopService.toShop(user.getPhone(), model);
+			
+			if("admin".equals(user.getPhone())){
+				//如果是管理员
+				resultPath = "/admin/user/addUser";
+			}
+			else{
+				//查出商店信息
+				model = shopService.toShop(user.getPhone(), model);
+				resultPath = "/admin/shop/addShop";
+			}
 		} else {
 			model.addAttribute("message", "电话或密码错误!");
 		}

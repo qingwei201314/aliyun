@@ -32,6 +32,17 @@ public class ImageDao  extends CommonDao<Image>{
 		return page.getList();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public Page<ImageDto> page(String categoryId, int pageNo){
+		String hql =  "select i.id as id, i.product_id as product_id, i.path as path,i.postfix as postfix, p.name as name " + 
+						"from im.gsj.entity.Image i, im.gsj.entity.Product p " + 
+						"where i.product_id = p.id "+
+							"and p.category_id = ?";
+		Page<ImageDto> page =super.pageByHql(hql,"select count(i.id)", pageNo, ImageDto.class, categoryId);
+		return page;
+	}
+	
 	/**取出某一产品的一页图片信息
 	 */
 	@Transactional(readOnly=true)
@@ -40,5 +51,15 @@ public class ImageDao  extends CommonDao<Image>{
 		criteria.add(Restrictions.eq("product_id", productId));
 		Page<Image> page = getPage(criteria, pageNo);
 		return page.getList();
+	}
+	
+	/**取出某一产品的一页图片信息
+	 */
+	@Transactional(readOnly=true)
+	public Page<Image> pageImage(String productId, int pageNo ){
+		Criteria criteria = getCriteria();
+		criteria.add(Restrictions.eq("product_id", productId));
+		Page<Image> page = getPage(criteria, pageNo);
+		return page;
 	}
 }

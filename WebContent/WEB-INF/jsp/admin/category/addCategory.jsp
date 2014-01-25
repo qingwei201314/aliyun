@@ -26,9 +26,11 @@
 							<tr>
 								<td>${category.name}</td>
 								<td>
+									<a href="${util.path}/admin/product/addProduct.do?categoryId=${category.id}">添加产品</a>
 									<a href="${util.path}/admin/category/editCategory.do?categoryId=${category.id}">修改</a>
-									<a href="${util.path}/admin/category/deleteCategory.do?deleteCategoryId=${category.id}">删除</a>
-									<a href="${util.path}/admin/product/toProduct.do?categoryId=${category.id}">添加产品</a>
+									<c:if test="${category.productId ==null }">
+										<a href="${util.path}/admin/category/deleteCategory.do?deleteCategoryId=${category.id}">删除</a>
+									</c:if>
 								</td>
 							</tr>
 						</c:forEach>

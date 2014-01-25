@@ -17,7 +17,7 @@
 			<c:forEach var="productVo" items="${productVoList}">
 			<div class="span-one-third">
 				<h4>${productVo.name}</h4>
-				<p><a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1"><img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" /></a></p>
+				<p><a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1"><img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" onError="this.src='${util.path}/img/product/none.jpg'" /></a></p>
 			</div>
 			</c:forEach>
 		</div>
@@ -38,10 +38,11 @@
     	</div>
       
     <!-- 加载更多信息 -->
+    <c:if test="${totalPage > 1 }">
 	  <div id="loader"  class="alert-message block-message success" style="margin-top: 28px;width: 400px;margin-left: auto;margin-right: auto;">
       	<p style="text-align: center;"><img src="${util.path}/img/loader.gif" style="margin-right: 10px;vertical-align: top;">数据加载中</p>
       </div>
-    
+    </c:if>
 	  <%@ include file="/commonjsp/footer.jsp"%>
 	</div>
 	
@@ -57,6 +58,7 @@
 	}
 	
 	//加载更多页面
+	<c:if test="${totalPage > 1 }">
     $(document).ready(function() {
 		var pageNo=2;   //加载更多页的页码
 		var result="";  //返回的页面
@@ -85,7 +87,7 @@
     		}
     	});
     });
-
+    </c:if>
 </script>
 </body>
 </html>

@@ -4,6 +4,7 @@ import im.gsj.dao.CategoryDao;
 import im.gsj.dao.ImageDao;
 import im.gsj.dao.ProductDao;
 import im.gsj.dao.ShopDao;
+import im.gsj.dao.dto.CategoryDto;
 import im.gsj.dao.dto.ImageDto;
 import im.gsj.entity.Category;
 import im.gsj.entity.Image;
@@ -12,6 +13,7 @@ import im.gsj.entity.Shop;
 import im.gsj.index.service.IndexService;
 import im.gsj.index.vo.ProductVo;
 import im.gsj.util.Constant;
+import im.gsj.util.Page;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,13 @@ public class CategoryService {
 	public List<Category> list(String phone) {
 		Shop shop =shopDao.getByPhone(phone);
 		List<Category> categoryList = categoryDao.getByShop(shop.getId());
+		return categoryList;
+	}
+	
+	@Transactional(readOnly=true)
+	public List<CategoryDto> listCategoryDto(String phone) {
+		Shop shop =shopDao.getByPhone(phone);
+		List<CategoryDto> categoryList = categoryDao.getCategoryByShop(shop.getId());
 		return categoryList;
 	}
 	
@@ -80,7 +89,9 @@ public class CategoryService {
 		List<Product> productList = productDao.listProduct(categoryId);
 		List<ProductVo> productVoList = getFirstProductImage(productList);
 		model.addAttribute("productVoList", productVoList);
-		List<ImageDto> imageDtoList = imageDao.pageByCategory(categoryId,pageNo);
+		Page<ImageDto> page = imageDao.page(categoryId,pageNo);
+		model.addAttribute("totalPage", page.getTotalPage());
+		List<ImageDto> imageDtoList = page.getList();
 		for(ImageDto imageDto: imageDtoList)
 			imageDto.setPath(imageDto.getPath() + Constant.S);
 		model.addAttribute("imageDtoList", imageDtoList);
@@ -126,7 +137,7 @@ public class CategoryService {
 	@Transactional(readOnly=true)
 	public ModelMap editCategory(String phone, String categoryId, ModelMap model) {
 		Shop shop =shopDao.getByPhone(phone);
-		List<Category> categoryList = categoryDao.getByShopExceptCurrent(shop.getId(), categoryId);
+		List<CategoryDto> categoryList = categoryDao.getByShopExceptCurrent(shop.getId(), categoryId);
 		model.addAttribute("categoryList", categoryList);
 		
 		//当前的选中项

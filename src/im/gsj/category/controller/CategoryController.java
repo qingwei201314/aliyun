@@ -2,6 +2,7 @@ package im.gsj.category.controller;
 
 import im.gsj.category.service.CategoryService;
 import im.gsj.dao.CategoryDao;
+import im.gsj.dao.dto.CategoryDto;
 import im.gsj.entity.Category;
 import im.gsj.entity.Shop;
 import im.gsj.shop.service.ShopService;
@@ -44,7 +45,7 @@ public class CategoryController extends CommonController{
 		}
 		
 		//查出当前商店的分类
-		List<Category> categoryList = categoryService.list(phone);
+		List<CategoryDto> categoryList = categoryService.listCategoryDto(phone);
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("categoryId", category.getId());
 		
@@ -60,7 +61,7 @@ public class CategoryController extends CommonController{
 		
 		//查出当前商店的分类
 		String phone = (String)request.getSession().getAttribute(Constant.phone);
-		List<Category> categoryList = categoryService.list(phone);
+		List<CategoryDto> categoryList = categoryService.listCategoryDto(phone);
 		model.addAttribute("categoryList", categoryList);
 		return "/admin/category/addCategory";
 	}
@@ -72,7 +73,7 @@ public class CategoryController extends CommonController{
 	public String addCategory(HttpServletRequest request, ModelMap model) {
 		String phone = (String)request.getSession().getAttribute(Constant.phone);
 		//查出当前商店的分类
-		List<Category> categoryList = categoryService.list(phone);
+		List<CategoryDto> categoryList = categoryService.listCategoryDto(phone);
 		model.addAttribute("categoryList", categoryList);
 		
 		//使头部能显示

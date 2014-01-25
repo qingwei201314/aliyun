@@ -187,8 +187,9 @@ public class ProductService {
 		BeanUtils.copyProperties(product, productVo);
 		productVo.setCategory_id(product.getCategory().getId());
 		productVo.setCategoryName(product.getCategory().getName());
-		List<Image> imageList = imageDao.pageImageByProduct(product.getId(), pageNo);
-		imageList = addFormate(imageList);
+		Page<Image> page = imageDao.pageImage(product.getId(), pageNo);
+		productVo.setTotalPage(page.getTotalPage());
+		List<Image> imageList = addFormate(page.getList());
 		productVo.setImageList(imageList);
 		return productVo;
 	}

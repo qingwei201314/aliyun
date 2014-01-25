@@ -5,12 +5,23 @@
 <head>
 <%@ include file="/commonjsp/head.jsp"%>
 <link href="${util.path}/css/shop/shop.css" rel="stylesheet" />
-<title>产品搜索</title>
+<title>搜索</title>
 </head>
-<body style="padding-top: 60px;">
-	<%@ include file="/commonjsp/topbar.jsp"%>
+<body>
+<form id="pageForm" action="${util.path }/index/search.do" method="get">
+<input type="hidden" id="pageNo" name="pageNo" value="1" />
 	<div class="container">
-		<div class="row" style="width: 960px;">
+		<div style="margin-top: 10px;display: table;padding-left: 127px;">
+			<div style="float: left;margin-right: 18px;">
+				<a href="${util.path}/user/login.do"><img src="${util.path}/img/logo.png" style="border:0;width: 150px;height: 58px;" /></a>
+			</div>
+			<div style="float: left;margin-top: 14px;">
+				<input type="text" name="q" value="${q }" class="search_div_input" style="border-radius:0px;" />
+				<input type="button" onclick="searchSubmit();" class="search_div_button" style="height: 34px;width: 100px;border-radius:0px;" />
+			</div>
+		</div>
+
+		<div class="row" style="width: 960px;margin-top: 10px;">
 			<c:forEach var="productVo" items="${page.list }">
 				<div class="span-one-third">
 					<h4>${productVo.name}</h4>
@@ -23,15 +34,16 @@
 			</c:forEach>
 		</div>
 		<!-- 分页 -->
-		<form id="pageForm" action="${util.path }/product/search.do">
-			<input type="hidden" name="shopId" value="${shopId }" />
-			<input type="hidden" name="q" value="${q }" />
 			<jsp:include page="/commonjsp/page.jsp">
 				<jsp:param name="pageForm" value="pageForm" />
 			</jsp:include>
-		</form>
 
-		<%@ include file="/commonjsp/footer.jsp"%>
 	</div>
+</form>
+<script type="text/javascript">
+	function searchSubmit(){
+		document.getElementById("pageForm").submit();
+	}
+</script>
 </body>
 </html>

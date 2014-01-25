@@ -24,4 +24,31 @@ public class UserService {
 			pass = true;
 		return pass;
 	}
+	
+	/**
+	 * 新增用户
+	 */
+	public int addUser(User user){
+		int result = 1;
+		User oriUser= userDao.query("phone", user.getPhone());
+		if(oriUser == null){
+			//如果用户不存在，则保存,返回1
+			userDao.save(user);
+		}
+		else{
+			//如果 用户存在，返回2
+			result = 2;
+		}
+		return result;
+	}
+	
+	/**
+	 * 更新密码
+	 */
+	@Transactional
+	public void updateUser(String phone,String password){
+		User user = userDao.query("phone", phone);
+		user.setPassword(password);
+		userDao.update(user);
+	}
 }

@@ -13,9 +13,9 @@
 	<div class="container">
 		<div class="hero-unit">
 			<h1>${productVo.name }</h1>
-			<p style="margin-top: 10px;">
+			<pre style="margin-top: 10px;border: none;">
 				${productVo.description }
-			</p>
+			</pre>
 		</div>
 
 		<!-- 显示详细图片 -->
@@ -28,11 +28,12 @@
 		</div>
 
 		<!-- 加载更多信息 -->
-		<div id="loader" class="alert-message block-message success"
-			style="margin-top: 28px; width: 400px; margin-left: auto; margin-right: auto;">
-			<p style="text-align: center;"><img src="${util.path}/img/loader.gif" style="margin-right: 10px;vertical-align: top;">数据加载中</p>
-		</div>
-
+		<c:if test="${productVo.totalPage > 1 }">
+			<div id="loader" class="alert-message block-message success"
+				style="margin-top: 28px; width: 400px; margin-left: auto; margin-right: auto;">
+				<p style="text-align: center;"><img src="${util.path}/img/loader.gif" style="margin-right: 10px;vertical-align: top;">数据加载中</p>
+			</div>
+		</c:if>
 		<%@ include file="/commonjsp/footer.jsp"%>
 	</div>
 	<script type="text/javascript">
@@ -47,6 +48,7 @@
 		}
 
 		//加载更多页面
+		<c:if test="${productVo.totalPage > 1 }">
 	    $(document).ready(function() {
 			var pageNo=2;   //加载更多页的页码
 			var result="";  //返回的页面
@@ -75,6 +77,7 @@
 	    		}
 	    	});
 	    });
+	    </c:if>
 	</script>
 </body>
 </html>
