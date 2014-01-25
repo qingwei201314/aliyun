@@ -15,7 +15,7 @@
 				<li id="aboutUs"><a href="${util.path }/about/aboutUs.do?phone=${userPhone}">关于我们</a></li>
 			</ul>
 			<div style="float: right; width: 232px; margin-top: 6px;">
-				<input type="text" name="q" style="line-height: 19px;" />
+				<input type="text" name="q" value="${q }" style="line-height: 19px;" />
 				<span style="position: absolute;">
 					<input type="submit" id="fdj" title="搜索" value="" />
 				</span>

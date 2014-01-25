@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row" style="width: 960px;">
 			<c:forEach var="productVo" items="${page.list }">
-				<div class="span-one-third">
+				<div class="span-one-third" style="height: 210px;">
 					<h4>${productVo.name}</h4>
 					<p>
 						<a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1">
