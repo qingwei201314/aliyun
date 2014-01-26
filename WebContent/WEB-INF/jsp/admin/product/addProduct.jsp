@@ -31,7 +31,7 @@
 				<div class="clearfix">
 					<label for="xlInput" class="label_width">名称</label>
 					<div class="div_margin">
-						<input type="text" name="name" value="${product.name}" size="30" maxlength="12" class="xlarge" />
+						<input type="text" id="name" name="name" value="${product.name}" size="30" maxlength="12" class="xlarge" />
 					</div>
 				</div>
 				<div class="clearfix">
