@@ -35,7 +35,7 @@ public class IndexController {
 	/**
 	 * 首页搜索
 	 */
-	@RequestMapping(value="search", method=RequestMethod.GET)
+	@RequestMapping(value="search.do", method=RequestMethod.GET)
 	public String search(@RequestParam("q") String q, int pageNo, ModelMap model){
 		String viewResult = "/shop/indexSearchResult";
 		//如果是手机号，直接跳转到商店首页
@@ -49,5 +49,13 @@ public class IndexController {
 		}
 		
 		return viewResult;
+	}
+	
+	/**
+	 * 跳转到注册页面
+	 */
+	@RequestMapping(value="register.do", method=RequestMethod.GET)
+	public String register(){
+		return "/register";
 	}
 }

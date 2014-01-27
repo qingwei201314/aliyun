@@ -20,6 +20,7 @@
 					<li style="float: right;" data-dropdown="dropdown">
 					  <a href="#" class="dropdown-toggle">${phone}</a>
 		              <ul class="dropdown-menu">
+		             	<li><a href="${util.path }/${phone}">首页</a></li>
 		                <li><a href="${util.path }/admin/shop/modPassword.do">修改密码</a></li>
 		                <li><a href="${util.path}/user/logout.do">退出登录</a></li>
 		              </ul>

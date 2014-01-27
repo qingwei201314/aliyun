@@ -10,6 +10,7 @@ import im.gsj.util.Constant;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,8 +30,19 @@ public class UserController {
 	private CityDao cityDao;
 
 	@RequestMapping(value = "login.do", method = RequestMethod.GET)
-	public String login() {
-		return "/user/login";
+	public String login(HttpSession session, ModelMap model) {
+		String viewResult;
+		String phone = (String)session.getAttribute(Constant.phone);
+		if(StringUtils.isEmpty(phone)){
+			viewResult = "/user/login";
+		}
+		else{
+			//如果已登录，查出商店信息
+			model = shopService.toShop(phone, model);
+			viewResult = "/admin/shop/addShop";
+		}
+		
+		return viewResult;
 	}
 
 	/**

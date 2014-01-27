@@ -14,6 +14,7 @@
 			<div class="container">
 				<ul class="nav">
 					<li class="active"><a href="#">用户登录</a></li>
+					<li ><a href="${util.path }">返回首页</a></li>
 				</ul>
 			</div>
 		</div>
