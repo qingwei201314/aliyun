@@ -16,7 +16,7 @@
 	height: 300px;
 	width: 700px;
 	padding-top: 260px;
-	margin-top: 20px;
+	margin: 20px auto;
 	background-repeat: no-repeat;
 }
 </style>
