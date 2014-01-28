@@ -24,7 +24,7 @@
 		</div>
 	</div>
 	<div style="text-align: center;margin-top: 100px;font-size: 8pt;color: #777777">
-		中小企业网站专家：电话号码就是您的企业网站！
+		中小企业网站专家：你的电话号码就是您的企业网站！
 	</div>
 </form>
 <script type="text/javascript">
