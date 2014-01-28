@@ -37,9 +37,15 @@ public class UserController {
 			viewResult = "/user/login";
 		}
 		else{
-			//如果已登录，查出商店信息
-			model = shopService.toShop(phone, model);
-			viewResult = "/admin/shop/addShop";
+			if("admin".equals(phone)){
+				//如果是admin,则跳转到登录页面
+				viewResult = "/user/login";
+			}
+			else{
+				//如果已登录，查出商店信息
+				model = shopService.toShop(phone, model);
+				viewResult = "/admin/shop/addShop";
+			}
 		}
 		
 		return viewResult;
