@@ -1,5 +1,7 @@
 package im.gsj.index.controller;
 
+import java.util.Calendar;
+
 import im.gsj.index.service.IndexService;
 import im.gsj.product.service.ProductService;
 import im.gsj.util.Page;
@@ -55,7 +57,14 @@ public class IndexController {
 	 * 跳转到注册页面
 	 */
 	@RequestMapping(value="register.do", method=RequestMethod.GET)
-	public String register(){
+	public String register(ModelMap model){
+		Calendar calender = Calendar.getInstance();
+		int year = calender.get(Calendar.YEAR);
+		String start = String.valueOf(year) + "年" + (calender.get(Calendar.MONTH) + 1) + "月" + calender.get(Calendar.DATE); 
+		model.addAttribute("start", start);
+		calender.set(Calendar.YEAR, year + 1);
+		String end  = String.valueOf(calender.get(Calendar.YEAR)) + "年" + (calender.get(Calendar.MONTH) + 1) + "月" + calender.get(Calendar.DATE);
+		model.addAttribute("end", end);
 		return "/register";
 	}
 }
