@@ -4,6 +4,7 @@
 <html>
 <head>
 <%@ include file="/commonjsp/head.jsp"%>
+<link href="${util.path}/css/shop/shop.css" rel="stylesheet" />
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>地图位置</title>

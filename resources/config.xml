@@ -2,6 +2,6 @@
 <root>
 	<path>http://localhost:8082/gsj</path>
 	<statics>http://localhost:8082/statics</statics>
-	<upload>E:\eclipse\workspace\statics\WebContent\repository</upload>
+	<upload>D:\eclipse\workspace\statics\WebContent\repository</upload>
 	<repository>/repository</repository>
 </root>
