@@ -5,7 +5,7 @@
 	<dd>
 		<h4>${imageVo.name}</h4>
 		<img class="product_detail"
-			src="${util.path }${util.repository }${imageVo.path }${imageVo.postfix }">
+			src="${util.statics }${util.repository }${imageVo.path }${imageVo.postfix }">
 	</dd>
 </c:forEach>
 <c:if test="${imageDtoList==null || imageDtoList.size() <=0}">

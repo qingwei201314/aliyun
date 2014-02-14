@@ -66,7 +66,7 @@
 			<div class=div3>
 				费用：¥200 有效期：${start } 至 ${end }
 				<br/>
-				<div style="float: right;padding-right: 12px;margin-top: 5px;"><a onclick="openTaobao()" href="#" style="color: green">购买</a></div>
+				<div style="float: right;padding-right: 12px;margin-top: 5px;">到《凯文信息》淘宝店<a onclick="openTaobao()" href="#" style="color: green;margin-left: 5px;">购买</a></div>
 			</div>
 			<div style="text-align: center;margin-top: 68px;"><a href="${util.path }" style="font-size: 10pt; color: green;">返回首页</a></div>
 		</div>

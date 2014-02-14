@@ -22,7 +22,7 @@
 		<div id="img_detail" class="img_detail">
 			<c:forEach var="image" items="${productVo.imageList }">
 			<dd>
-				<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.path }${util.repository }${image.path }${image.postfix}">
+				<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.statics }${util.repository }${image.path }${image.postfix}">
 			</dd>
 			</c:forEach>
 		</div>

@@ -6,7 +6,7 @@
 	<dd>
 		<img onclick="showImage(this.src, '${productVo.name}')"
 			class="product_detail"
-			src="${util.path }${util.repository }${image.path }${image.postfix}">
+			src="${util.statics }${util.repository }${image.path }${image.postfix}">
 	</dd>
 </c:forEach>
 

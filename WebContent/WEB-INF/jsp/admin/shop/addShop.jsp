@@ -65,7 +65,7 @@
 					<label for="xlInput" class="label_width">大门图片</label>
 					<div class="div_margin ">
 						<img id="gatePhone"
-							src="${util.path}${util.repository}${shop.gate_url}"
+							src="${util.statics}${util.repository}${shop.gate_url}"
 							style="width: 580px; height: 290px; margin-bottom:10px; display: none;<c:if test="${shop.gate_url!=null&& !''.equals(shop.gate_url)}">display:block;</c:if>" />
 						<input type="file" name="file_upload" id="file_upload" />
 						<input type="hidden" id="gate_url" name="gate_url" value="${shop.gate_url}" />
@@ -106,7 +106,7 @@
 		         'height'   :  '28px',
 		         'fileTypeExts' : '*.gif; *.jpg; *.png',
 		         'onUploadSuccess' : function(file, data, response) {
-		         	var path = "${util.path}${util.repository}" + data;
+		         	var path = "${util.statics}${util.repository}" + data;
 		        	$("#gatePhone").show();
 		        	$("#gatePhone").attr("src", path); 
 		        	$("#gate_url").val(data);

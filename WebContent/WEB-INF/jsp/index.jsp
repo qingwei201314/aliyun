@@ -27,6 +27,11 @@
 		中小企业网站专家：你的电话号码就是您的企业网站！
 	</div>
 </form>
+
+<div style="width: 100%;text-align:center;font-size: 8pt;color: #777777">
+	<p>© 凯文信息 2014<a style="margin-left: 5px;color: #777777;text-decoration: none;" target="_blank" href="http://www.miitbeian.gov.cn/">粤ICP备14009815号</a></p>
+</div>
+
 <script type="text/javascript">
 	function searchSubmit(){
 		document.getElementById("searchForm").submit();

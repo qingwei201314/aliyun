@@ -17,7 +17,7 @@
 			<c:forEach var="productVo" items="${productVoList}">
 			<div class="span-one-third">
 				<h4>${productVo.name}</h4>
-				<p><a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1"><img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" onError="this.src='${util.path}/img/product/none.jpg'" /></a></p>
+				<p><a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1"><img class="product" src="${util.statics}${util.repository}${productVo.path}${productVo.postfix}" onError="this.src='${util.path}/img/product/none.jpg'" /></a></p>
 			</div>
 			</c:forEach>
 		</div>
@@ -32,7 +32,7 @@
     		<c:forEach var="imageVo" items="${imageDtoList}">
 	    		<dd>
 		    		<h4>${imageVo.name}</h4>
-			    	<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.path }${util.repository }${imageVo.path }${imageVo.postfix }">
+			    	<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.statics }${util.repository }${imageVo.path }${imageVo.postfix }">
 		    	</dd>
 	    	</c:forEach>
     	</div>

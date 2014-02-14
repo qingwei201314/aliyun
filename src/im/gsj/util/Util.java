@@ -11,6 +11,8 @@ public class Util {
 	private static Document document;
 	// 工程url中的目录
 	private static String path;
+	//静态文件的工程路径
+	private static String statics;
 	// 上传路径
 	private static String upload;
 	//存放图片的工程路径
@@ -24,6 +26,7 @@ public class Util {
 			document = saxReader.read(new File(path + "config.xml"));
 		}
 		path = document.selectSingleNode("//root//path").getStringValue();
+		statics = document.selectSingleNode("//root//statics").getStringValue();
 		upload = document.selectSingleNode("//root//upload").getStringValue();
 		repository = document.selectSingleNode("//root//repository").getStringValue();
 	}
@@ -52,4 +55,11 @@ public class Util {
 		return repository;
 	}
 	
+	public String getStatics() {
+		return statics;
+	}
+	
+	public static String statics() {
+		return statics;
+	}
 }

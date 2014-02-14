@@ -75,7 +75,7 @@
 			<c:forEach var="image" items="${productVo.imageList}">
 				<div class="span-one-third-product-img">
 					<p>
-						<img class="product" src="${util.path}${util.repository}${image.path}_220x165${image.postfix}" />
+						<img class="product" src="${util.statics}${util.repository}${image.path}_220x165${image.postfix}" />
 					</p>
 				</div>
 			</c:forEach>
@@ -96,7 +96,7 @@
 		         'fileTypeExts' : '*.gif; *.jpg; *.png',
 		         'onUploadSuccess' : function(file, data, response) {
 		        	 	var content = $("#template").html();
-						var photosrc = "${util.path}${util.repository}" + data;
+						var photosrc = "${util.statics}${util.repository}" + data;
 						content = content.replace("photosrc", photosrc);
 						$("#displayContent").append(content);
 		          },

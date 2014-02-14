@@ -27,7 +27,7 @@
 					<h4>${productVo.name}</h4>
 					<p>
 						<a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1">
-							<img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" onError="this.src='${util.path}/img/product/none.jpg'" />
+							<img class="product" src="${util.statics}${util.repository}${productVo.path}${productVo.postfix}" onError="this.src='${util.path}/img/product/none.jpg'" />
 						</a>
 					</p>
 				</div>

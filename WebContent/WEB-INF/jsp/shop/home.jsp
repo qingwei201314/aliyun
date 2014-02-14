@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="index_home">
 			<div class="left_div">
-				<img class="gate_img" src="${util.path}${util.repository}${shop.gate_url}" />
+				<img class="gate_img" src="${util.statics}${util.repository}${shop.gate_url}" />
 			</div>
 			<div class="right_div">
 				<dl>
@@ -51,7 +51,7 @@
 					<h4>${productVo.name}</h4>
 					<p>
 						<a href="${util.path }/product/viewProduct.do?productId=${productVo.id}&pageNo=1">
-							<img class="product" src="${util.path}${util.repository}${productVo.path}${productVo.postfix}" onError="this.src='${util.path}/img/product/none.jpg'" />
+							<img class="product" src="${util.statics}${util.repository}${productVo.path}${productVo.postfix}" onError="this.src='${util.path}/img/product/none.jpg'" />
 						</a>
 					</p>
 				</div>
