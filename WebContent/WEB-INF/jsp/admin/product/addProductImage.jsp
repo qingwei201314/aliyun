@@ -69,13 +69,15 @@
 				<div class="span-one-third-product-img">
 					<p>
 						<img class="product" src="photosrc" />
+						<a href="javascript:void(0)" onclick="deletePhoto(this, 'imageId');" style="color:#808080">删除</a>
 					</p>
 				</div>
 			</div>
 			<c:forEach var="image" items="${productVo.imageList}">
 				<div class="span-one-third-product-img">
 					<p>
-						<img class="product" src="${util.statics}${util.repository}${image.path}_220x165${image.postfix}" />
+						<img class="product" src="${util.statics}${util.repository}${image.path}_220x165${image.postfix}" onError="this.src='${util.path}/img/product/none.jpg'"/>
+						<a href="javascript:void(0)" onclick="deletePhoto(this, '${image.id}');" style="color:#808080">删除</a>
 					</p>
 				</div>
 			</c:forEach>
@@ -95,9 +97,11 @@
 		         'height'   :  '28px',
 		         'fileTypeExts' : '*.gif; *.jpg; *.png',
 		         'onUploadSuccess' : function(file, data, response) {
+		        	 	var iamgeResult = jQuery.parseJSON(data);
 		        	 	var content = $("#template").html();
-						var photosrc = "${util.statics}${util.repository}" + data;
+						var photosrc = "${util.statics}${util.repository}" + iamgeResult.resut;
 						content = content.replace("photosrc", photosrc);
+						content = content.replace("imageId", iamgeResult.imageId);
 						$("#displayContent").append(content);
 		          },
 		         'buttonClass' : 'btn info'
@@ -108,6 +112,21 @@
 		    function jumpTo(){
 		    	$("#productForm").attr("action", "${util.path}/admin/product/addProduct.do");
 		    	$("#productForm").submit();
+			}
+
+			//删除图片
+			function deletePhoto(aObject, imageId){
+				$.ajax({
+					url: "${util.path}/admin/image/deleteImage.do",
+					data: {
+						imageId: imageId
+					},
+					success: function(data) {
+						if("success" == data){
+							$(aObject).parent().parent().remove();
+						}
+					}
+				});
 			}
 </script>
 </body>

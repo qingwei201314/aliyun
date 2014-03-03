@@ -9,6 +9,7 @@ import im.gsj.entity.Category;
 import im.gsj.entity.Image;
 import im.gsj.entity.Product;
 import im.gsj.entity.Shop;
+import im.gsj.image.service.ImageResult;
 import im.gsj.image.service.ImageService;
 import im.gsj.index.service.IndexService;
 import im.gsj.product.vo.ProductVo;
@@ -30,6 +31,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+
+import com.google.gson.Gson;
 
 @Service
 public class ProductService {
@@ -111,8 +114,10 @@ public class ProductService {
 		String productId = request.getParameter("productId");
 		String phone = (String) request.getSession().getAttribute("phone");
 		String result = uploadify.upload(phone, request, widthXheight);
-		result = imageService.saveImage(productId, result);
-		return result;
+		ImageResult imageResult = imageService.saveImage(productId, result);
+		Gson gson = new Gson();
+		String json = gson.toJson(imageResult);
+		return json;
 	}
 
 	@Transactional

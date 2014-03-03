@@ -96,15 +96,13 @@ public class ProductController extends CommonController{
 	
 	/**
 	 * 上传产品图片
-	 * @return
-	 * @throws Exception 
 	 */
 	@RequestMapping(value = "upload.do", method = RequestMethod.POST)
 	public String upload(HttpServletRequest request, HttpServletResponse response) throws Exception{
 			String widthXheight = request.getParameter("widthXheight");
-			String result = productService.upload(request, widthXheight);
+			String json = productService.upload(request, widthXheight);
 			PrintWriter pw = response.getWriter();
-			pw.append(result);
+			pw.append(json);
 			return null;
 	}
 
