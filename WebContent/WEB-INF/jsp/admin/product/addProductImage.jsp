@@ -31,14 +31,16 @@
 				</table>
 			</div>
 			<div style="width: 800px;margin:0 auto;">
-				<table class="bordered-table zebra-striped table_width_93">
-					<tbody>
-						<tr>
-							<td style="width: 100%">描述：</td>
+				<table class="bordered-table zebra-striped table_width_93" style="width: 800px;">
+					<tbody style="width: 800px;">
+						<tr style="width: 800px;">
+							<td style="width: 800px;">描述：</td>
 						</tr>
 						<tr>
-							<td style="width: 100%">
-								${productVo.description}
+							<td style="padding:0px;">
+								<pre style="margin-top: 10px;border: none;width: 800px;margin:0px;">
+									${productVo.description}
+								</pre>
 							</td>
 						</tr>
 					</tbody>
