@@ -32,7 +32,7 @@
     		<c:forEach var="imageVo" items="${imageDtoList}">
 	    		<dd>
 		    		<h4>${imageVo.name}</h4>
-			    	<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.statics }${util.repository }${imageVo.path }${imageVo.postfix }">
+			    	<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.statics }${util.repository }${imageVo.path }${imageVo.postfix }" />
 		    	</dd>
 	    	</c:forEach>
     	</div>
@@ -71,6 +71,7 @@
     				url: "${util.path}/category/moreImage.do",
     				data: {
     					categoryId: "${categoryId}",
+    					date: new Date(),
     					pageNo: pageNo
     				},
     				success: function( data ) {

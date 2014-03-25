@@ -45,8 +45,6 @@
 					</table>
 				</div>
 			</fieldset>
-			<div class="actions" style="padding-left: 360px;">
-			</div>
 		</form>
 	</div>
 	<script type="text/javascript">

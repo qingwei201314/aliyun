@@ -1,6 +1,5 @@
 package im.gsj.dao.dto;
 
-
 public class CategoryDto {
 	private String id;
 	private String name;
@@ -31,5 +30,4 @@ public class CategoryDto {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
-	
 }

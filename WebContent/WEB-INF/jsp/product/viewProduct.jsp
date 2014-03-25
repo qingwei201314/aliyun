@@ -22,7 +22,8 @@
 		<div id="img_detail" class="img_detail">
 			<c:forEach var="image" items="${productVo.imageList }">
 			<dd>
-				<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.statics }${util.repository }${image.path }${image.postfix}">
+				<h4 style="height: 0px;">&nbsp;</h4>
+				<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.statics }${util.repository }${image.path }${image.postfix}" />
 			</dd>
 			</c:forEach>
 		</div>
@@ -61,7 +62,8 @@
 	    				url: "${util.path}/product/moreImage.do",
 	    				data: {
 	    					productId: "${productVo.id }",
-	    					pageNo: pageNo
+	    					pageNo: pageNo,
+	    					date: new Date()
 	    				},
 	    				success: function( data ) {
 	    					result = data;

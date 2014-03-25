@@ -4,9 +4,10 @@
 
 <c:forEach var="image" items="${productVo.imageList }">
 	<dd>
+		<h4 style="height: 0px;">&nbsp;</h4>
 		<img onclick="showImage(this.src, '${productVo.name}')"
 			class="product_detail"
-			src="${util.statics }${util.repository }${image.path }${image.postfix}">
+			src="${util.statics }${util.repository }${image.path }${image.postfix}" />
 	</dd>
 </c:forEach>
 

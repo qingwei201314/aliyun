@@ -93,7 +93,7 @@ public class CategoryService {
 		model.addAttribute("totalPage", page.getTotalPage());
 		List<ImageDto> imageDtoList = page.getList();
 		for(ImageDto imageDto: imageDtoList)
-			imageDto.setPath(imageDto.getPath() + Constant.S);
+			imageDto.setPath(imageDto.getPath() + Constant.B);
 		model.addAttribute("imageDtoList", imageDtoList);
 		//取出头部和尾部的值
 		model = indexService.getHeadAndFooter(shopId, model);
@@ -126,7 +126,7 @@ public class CategoryService {
 	public ModelMap moreImage(String categoryId,int pageNo, ModelMap model){
 		List<ImageDto> imageDtoList = imageDao.pageByCategory(categoryId,pageNo);
 		for(ImageDto imageDto: imageDtoList)
-			imageDto.setPath(imageDto.getPath() + Constant.S);
+			imageDto.setPath(imageDto.getPath() + Constant.B);
 		model.addAttribute("imageDtoList", imageDtoList);
 		return model;
 	}

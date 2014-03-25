@@ -4,8 +4,7 @@
 <c:forEach var="imageVo" items="${imageDtoList}">
 	<dd>
 		<h4>${imageVo.name}</h4>
-		<img class="product_detail"
-			src="${util.statics }${util.repository }${imageVo.path }${imageVo.postfix }">
+		<img onclick="showImage(this.src, '${productVo.name}')" class="product_detail" src="${util.statics }${util.repository }${imageVo.path }${imageVo.postfix }" />
 	</dd>
 </c:forEach>
 <c:if test="${imageDtoList==null || imageDtoList.size() <=0}">

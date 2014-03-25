@@ -11,7 +11,7 @@
 	<%@ include file="/commonjsp/admin/topbar.jsp"%>
 	<div class="container">
 		<form action="${util.path}/admin/about/editAbout.do" method="get">
-			<div class="hero-unit" style="" >
+			<div class="hero-unit" >
 				<pre style="margin-top: 10px;border: none;">${about.content}</pre>
 			</div>
 

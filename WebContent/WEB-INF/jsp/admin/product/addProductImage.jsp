@@ -30,21 +30,11 @@
 					</tbody>
 				</table>
 			</div>
-			<div style="width: 800px;margin:0 auto;">
-				<table class="bordered-table zebra-striped table_width_93" style="width: 800px;">
-					<tbody style="width: 800px;">
-						<tr style="width: 800px;">
-							<td style="width: 800px;">描述：</td>
-						</tr>
-						<tr>
-							<td style="padding:0px;">
-								<pre style="margin-top: 10px;border: none;width: 800px;margin:0px;">
-									${productVo.description}
-								</pre>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+			<div style="width: 816px;margin:0 auto;border:1px solid #DDDDDD;">
+				<h5 style="font-size: 100%;padding-left: 10px;border-bottom: 1px solid #DDDDDD;">描述：</h5>
+				<pre style="border: none;margin:0px;">
+					${productVo.description}
+				</pre>
 			</div>
 			</fieldset>
 			<div class="row" id="photos">

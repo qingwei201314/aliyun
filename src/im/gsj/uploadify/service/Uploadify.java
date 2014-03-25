@@ -60,6 +60,7 @@ public class Uploadify {
 				if(!fileItem.isFormField()){
 					File file = new File(upLoadPath + path+"/" + ymdhms + "_" + fileItem.getName());
 					fileItem.write(file);
+					//将图片进行缩略
 					Image srcImg = ImageIO.read(file); 
 					if(widthHeights != null && widthHeights.size() >0){
 						for(int j =0; j< widthHeights.size() ; j++ ){
@@ -73,7 +74,8 @@ public class Uploadify {
 							resultPath += newpath + ",";
 						}
 					}
-					file.delete(); //将原始文件删除，节省磁盘空间
+					//将原始文件删除，节省磁盘空间
+					file.delete(); 
 				}
 			}
 		}

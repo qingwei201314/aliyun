@@ -35,7 +35,7 @@ public class CategoryDao extends CommonDao<Category>{
 	@SuppressWarnings("unchecked")
 	public List<CategoryDto> getByShopExceptCurrent(String shop_id, String category_id){
 		String hql = "SELECT c.id as id, c.name as name, c.shop_id as shop_id, p.id as productId from category c left join product p on p.category_id = c.id " + 
-						"where c.id != :id and c.shop_id = :shop_id";
+						"where c.id != :id and c.shop_id = :shop_id group by c.id";
 		SQLQuery sQLQuery = getSession().createSQLQuery(hql);
 		sQLQuery.setParameter("id", category_id);
 		sQLQuery.setParameter("shop_id", shop_id);
