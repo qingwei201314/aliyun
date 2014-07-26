@@ -28,6 +28,12 @@ public class IndexController {
 		return "/index";
 	}
 	
+	//跳转到主页
+	@RequestMapping(value="/main.do", method=RequestMethod.GET)
+	public String main() {
+		return "/main";
+	}
+	
 	@RequestMapping(value="/home.do", method=RequestMethod.GET)
 	public String home(@RequestParam("phone") String phone, @RequestParam("pageNo") int pageNo, ModelMap model){
 		model = indexService.home(phone,pageNo, model);

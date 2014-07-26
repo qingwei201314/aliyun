@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <root>
-	<path>http://localhost:8082/gsj</path>
-	<statics>http://localhost:8082/statics</statics>
+	<path>http://localhost:8080/gsj</path>
+	<statics>http://localhost:8080/statics</statics>
 	<upload>D:\eclipse\workspace\statics\WebContent\repository</upload>
 	<repository>/repository</repository>
 </root>

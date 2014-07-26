@@ -15,7 +15,7 @@
 <form id="searchForm" action="${util.path }/index/search.do" method="get">
 	<input type="hidden" name="pageNo" value="1" />
 	<div class="logo_div">
-		<a href="#"><img src="${util.path}/img/logo.png" style="border:0;" /></a>
+		<a href="${util.path}/index/main.do"><img src="${util.path}/img/logo.png" style="border:0;" /></a>
 	</div>
 	<div>
 		<div class="search_div" >
